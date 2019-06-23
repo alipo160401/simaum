@@ -46,7 +46,12 @@ class DetailPengadaanController extends Controller
             'harga_estimasi' => $request['harga_estimasi'],
         ]);
 
-        return redirect('/detailPengadaan/index')->with('OK', 'Berhasil menambah Detail Pengadaan.');
+        $pengadaan = Pengadaan::find($request['id_pengadaan']);
+        $pengadaan->update([
+            'total_harga_estimasi' => $pengadaan->total_harga_estimasi + $request['harga_estimasi']
+        ]);
+
+        return redirect('/pengadaan/'. $pengadaan->id)->with('OK', 'Berhasil menambah barang.');
     }
 
     /**
@@ -66,10 +71,9 @@ class DetailPengadaanController extends Controller
      * @param  \App\DetailPengadaan  $detailPengadaan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit($id)
     {
-        $data['detailPengadaan'] = DetailPengadaan::find($request['id']);
-        $data['pengadaan'] = Pengadaan::all();
+        $data['detailPengadaan'] = DetailPengadaan::find($id);
 
         return view('detailPengadaan.edit', $data);
     }
@@ -82,9 +86,15 @@ class DetailPengadaanController extends Controller
      * @param  \App\DetailPengadaan  $detailPengadaan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DetailPengadaan $detailPengadaan)
+    public function update(Request $request, $id)
     {
-        $detailPengadaan = DetailPengadaan::find($request['id']);
+        $pengadaan = Pengadaan::find($request['id_pengadaan']);
+        $detailPengadaan = DetailPengadaan::find($id);
+        
+        $pengadaan->update([
+            'total_harga_estimasi' => $pengadaan->total_harga_estimasi - $detailPengadaan->harga_estimasi + $request['harga_estimasi'],
+        ]);
+
         $detailPengadaan->update([
             'id_pengadaan' => $request['id_pengadaan'],
             'nama_barang' => $request['nama_barang'],
@@ -103,6 +113,10 @@ class DetailPengadaanController extends Controller
     public function destroy(Request $request)
     {
         $detailPengadaan = DetailPengadaan::find($request['id']);
+        $pengadaan = Pengadaan::find($detailPengadaan->id_pengadaan);
+        $pengadaan->update([
+            'total_harga_estimasi' => $pengadaan->total_harga_estimasi - $detailPengadaan->harga_estimasi,
+        ]);
         $detailPengadaan->delete();
         return redirect()->back()->with('OK', 'Berhasil menghapus Detail Pengadaan!'); 
     }

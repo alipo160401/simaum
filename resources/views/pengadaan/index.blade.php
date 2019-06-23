@@ -104,38 +104,39 @@
 
 {{-- modal delete --}}
 <div class="modal fade" id="delete">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <form id="deleteForm" method="POST">
-    
-                    @csrf
-                    <!-- Modal Header -->
-                    <div class="modal-header bg-info">
-                        <h4 class="modal-title text-white">Apakah anda yakin ingin menghapus Pengadaan ini ?</h4>
-                        <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                    </div>
-    
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="submit" name="id" id="deleteId" class="btn btn-success round"> Yakin
-                        </button>
-                        <button type="button" class="btn btn-danger round" data-dismiss="modal"> Batal
-                        </button>
-                    </div>
-    
-                </form>
-            </div>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form id="deleteForm" method="POST">
+
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header bg-info">
+                    <h4 class="modal-title text-white">Apakah anda yakin ingin menghapus Pengadaan ini ?</h4>
+                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" name="id" id="deleteId" class="btn btn-success round"> Yakin
+                    </button>
+                    <button type="button" class="btn btn-danger round" data-dismiss="modal"> Batal
+                    </button>
+                </div>
+
+            </form>
         </div>
+    </div>
 </div>
+
 @endsection
 
 @section('script')
 <script>
-$(document).on("click", ".tombolHapus", function(){
-        var id = $(this).val();
-    $("#deleteForm").attr("action", "/pengadaan/destroy/"+ id);
-    $("#deleteId").val(id);
-    $("#delete").modal();
-});
+    $(document).on("click", ".tombolHapus", function(){
+            var id = $(this).val();
+        $("#deleteForm").attr("action", "/pengadaan/destroy/"+ id);
+        $("#deleteId").val(id);
+        $("#delete").modal();
+    });
 </script>
 @endsection

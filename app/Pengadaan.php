@@ -11,6 +11,10 @@ class Pengadaan extends Model
     ];
     public function vendor()
     {
-        return $this->belongsTo('App\Vendor');
+        return $this->belongsTo('App\Vendor', 'id_vendor');
+    }
+    public function detail_pengadaan()
+    {
+        return $this->hasMany('App\DetailPengadaan', 'id_pengadaan');
     }
 }

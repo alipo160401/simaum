@@ -88,7 +88,16 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('edit/{id}', 'PengadaanController@edit');
         Route::post('update/{id}', 'PengadaanController@update');
         Route::post('destroy/{id}', 'PengadaanController@destroy');
-        
+        Route::get('{id}', 'PengadaanController@show');      
+    });
+
+    Route::group(['prefix' => '/detailPengadaan'], function(){
+
+        Route::post('store', 'DetailPengadaanController@store');   
+        Route::get('edit/{id}', 'DetailPengadaanController@edit');
+        Route::post('update/{id}', 'DetailPengadaanController@update');
+        Route::post('destroy/{id}', 'DetailPengadaanController@destroy');
+
     });
 
     Route::group(['prefix' => '/pemeliharaanRutin'], function(){

@@ -46,12 +46,6 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Nama Ruang</label>
-                                        <input type="text" id="nama" class="form-control" name="nama" value="{{ $ruang->nama }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
                                         <label >Nomor Pengajuan</label>
                                         <input type="text"  class="form-control" placeholder="Nomor Pengajuan" name="no_pengajuan" value="{{ $pengadaan->no_pengajuan }}">
                                     </div>

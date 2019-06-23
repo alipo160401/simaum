@@ -40,7 +40,7 @@ class PengadaanController extends Controller
      */
     public function store(Request $request)
     {
-        Pengadaan::create([
+        $pengadaan = Pengadaan::create([
             'id_vendor' => $request['id_vendor'],
             'no_pengajuan' => $request['no_pengajuan'],
             'status' => 'Belum dikonfirmasi',
@@ -51,7 +51,7 @@ class PengadaanController extends Controller
             'tanggal_beli' => $request['tanggal_beli'],
         ]);
 
-        return redirect('/pengadaan/index')->with('OK', 'Berhasil menambah Pengajuan Pengadaan.');
+        return redirect('/pengadaan/'.$pengadaan->id)->with('OK', 'Silahkan tambah list barang.');
     }
 
     /**
@@ -60,9 +60,12 @@ class PengadaanController extends Controller
      * @param  \App\Pengadaan  $pengadaan
      * @return \Illuminate\Http\Response
      */
-    public function show(Pengadaan $pengadaan)
+    public function show($id)
     {
-        //
+        $data['pengadaan'] = Pengadaan::with('vendor', 'detail_pengadaan')->where('id', $id)->first();
+        $data['vendor'] = Vendor::all();
+
+        return view('pengadaan.show', $data);
     }
 
     /**

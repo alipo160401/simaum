@@ -61,36 +61,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >Total Harga Estimasi</label>
-                                        <input type="text" class="form-control" placeholder="Total Harga Estimasi" name="total_harga_estimasi" required>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >Total Harga Real</label>
-                                        <input type="text" class="form-control" placeholder="Total Harga Real" name="total_harga_real" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >Invoice</label>
-                                        <input type="text"  class="form-control" placeholder="Invoice" name="invoice" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >Berita Acara</label>
-                                        <input type="file"  class="form-control" placeholder="Berita Acara" name="berita_acara" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >Tanggal Beli</label>
-                                        <input type="date"  class="form-control" placeholder="Tanggal Beli" name="tanggal_beli" required>
-                                    </div>
-                                </div> --}}
                             </div>
                             <div class="form-actions">
                                 <button type="submit" class="btn btn-outline-primary">

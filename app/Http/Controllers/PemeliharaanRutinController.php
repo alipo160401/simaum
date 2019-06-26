@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\PemeliharaanRutin;
 use App\Vendor;
+use App\Asset;
 use Illuminate\Http\Request;
 
 class PemeliharaanRutinController extends Controller
@@ -40,7 +41,7 @@ class PemeliharaanRutinController extends Controller
      */
     public function store(Request $request)
     {
-        PemeliharaanRutin::create([
+       $pemeliharaanRutin = PemeliharaanRutin::create([
             'id_vendor' => $request['id_vendor'],
             'no_pengajuan' => $request['no_pengajuan'],
             'status' => 'Belum dikonfirmasi',
@@ -51,7 +52,7 @@ class PemeliharaanRutinController extends Controller
             'tanggal_beli' => $request['tanggal_beli'],
         ]);
 
-        return redirect('/pemeliharaanRutin/index')->with('OK', 'Berhasil menambah Pengajuan Pemeliharaan Rutin.');
+        return redirect('/pemeliharaanRutin/'.$pemeliharaanRutin->id)->with('OK', 'Silahkan tambah list barang.');
     }
 
     /**
@@ -60,9 +61,13 @@ class PemeliharaanRutinController extends Controller
      * @param  \App\PemeliharaanRutin  $pemeliharaanRutin
      * @return \Illuminate\Http\Response
      */
-    public function show(PemeliharaanRutin $pemeliharaanRutin)
+    public function show($id)
     {
-        //
+        $data['pemeliharaanRutin'] = PemeliharaanRutin::with('vendor', 'detail_pemeliharaan', 'asset')->where('id', $id)->first();
+        $data['vendor'] = Vendor::all();
+        $data['asset'] = Asset::all();
+
+        return view('pemeliharaanRutin.show', $data);
     }
 
     /**
@@ -110,8 +115,8 @@ class PemeliharaanRutinController extends Controller
      */
     public function destroy(Request $request)
     {
-        $pengadaan = Pengadaan::find($request['id']);
-        $pengadaan->delete();
-        return redirect()->back()->with('OK', 'Berhasil menghapus Pengajuan Pemilihan Rutin!'); 
+        $pemeliharaanRutin = PemeliharaanRutin::find($request['id']);
+        $pemeliharaanRutin->delete();
+        return redirect()->back()->with('OK', 'Berhasil menghapus Pengajuan Pemeliharaan Rutin!'); 
     }
 }

@@ -69,7 +69,7 @@ class AssetController extends Controller
             'umur_ekonomis' => $request['umur_ekonomis'],
             'penyusutan' => $penyusutan,
             'tanggal_penyusutan' => $request['tanggal_beli'],
-            'kondisi' => 'Baik',
+            'kondisi' => $request['kondisi'],
             'status_pemusnahan' => 'False',
         ]);
 

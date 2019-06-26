@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title', 'Asset')
+@section('title', 'Pemindahan')
 
 @section('style')
 
@@ -8,13 +8,13 @@
 
 @section('content-header')
 <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-    <h3 class="content-header-title mb-0 d-inline-block">Data Asset</h3>
+    <h3 class="content-header-title mb-0 d-inline-block">Data Pemindahan</h3>
     <div class="row breadcrumbs-top d-inline-block">
         <div class="breadcrumb-wrapper col-12">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/asset/index">Home</a>
+                <li class="breadcrumb-item"><a href="/pemindahan/index">Home</a>
                 </li>
-                <li class="breadcrumb-item active">Asset
+                <li class="breadcrumb-item active">Pemindahan
                 </li>
             </ol>
         </div>
@@ -22,7 +22,7 @@
 </div>
 <div class="content-header-right col-md-6 col-12">
     <div class="btn-group float-md-right">
-        <a href="/asset/create" class="btn btn-info">Tambah</a>
+        <a href="/pemindahan/create" class="btn btn-info">Tambah</a>
     </div>
 </div>
 @endsection
@@ -47,69 +47,73 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Lokasi Asset</th>
-                                <th>Nama</th>
-                                <th>Kode</th>
-                                <th>Kategori</th>
-                                <th>Jenis</th>
-                                <th>Deskripsi</th>
-                                <th>Tanggal Beli</th>
-                                <th>Value Beli</th>
-                                <th>Umur Ekonomis</th>
-                                <th>Penyusutan</th>
-                                <th>Value Sekarang</th>
-                                <th>Kondisi</th>
+                                <th>Data Barang</th>
+                                <th>Pemindahan Ruang</th>
+                                <th>Nama Surat</th>
+                                <th>Nomor Surat</th>
+                                <th>Jenis Ticket</th>
+                                <th>PIC Pekerja</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($asset as $data)
-                            @if ($data->status_pemusnahan != 'Dimusnahkan')
+                            @foreach ($pemindahan as $data)
                             <tr>
                                 <td>{{ $nomor++ }}</td>
-                                <td>{{ $data->ruang->nama }}, Kode Ruang: {{ $data->ruang->kode }}, Jenis Ruang: {{ $data->ruang->jenis }}</td>
-                                <td>{{ $data->nama }}</td>
-                                <td>{{ $data->kode }}</td>
-                                <td>{{ $data->kategori }}, Sub Kategori: {{ $data->sub_kategori }}</td>
-                                <td>{{ $data->jenis }}</td>
-                                <td>{{ $data->deskripsi }}</td>
-                                <td>{{ $data->tanggal_beli }}</td>
-                                <td>{{ $data->value_beli }}</td>
-                                <td>{{ $data->umur_ekonomis }}</td>
-                                <td>{{ $data->penyusutan }}</td>
-                                <td>{{ $data->value_sekarang }}</td>
-                                <td>{{ $data->kondisi }}</td>
+                                <td>{{ $data->asset->nama }},Kode: {{ $data->asset->kode }},Ruang: {{ $data->asset->ruang->nama }}</td>
+                                <td>{{ $data->ruang->nama }}</td>
+                                <td>{{ $data->nama_surat }}</td>
+                                <td>{{ $data->no_surat }}</td>
+                                <td>{{ $data->jenis_surat }}</td>
+                                <td>{{ $data->pic_pekerja }}</td>
+                                <td>{{ $data->status }}</td>
                                 <td>
-                                    <div class="btn-group text-center">
-                                        <button type="button" class="btn btn-info round dropdown-toggle"
+                                <div class="btn-group text-center">
+                                    <button type="button" class="btn btn-info round dropdown-toggle"
                                         data-toggle="dropdown">
                                         <i class="la la-gear"></i>
                                     </button>
                                     <div class="dropdown-menu" x-placement="button-start">
-                                        <a href="/asset/edit/{{ $data->id }}">
+                                        <a href="/pemindahan/edit/{{ $data->id }}">
                                             <button class="dropdown-item btn btn-outline-info">
                                                 <i class="la la-edit">
                                                     <label for="">Edit</label>
                                                 </i>
                                             </button>
                                         </a>
-                                        <button class="dropdown-item btn btn-outline-danger tombolHapus" value="{{ $data->id }}">
-                                                <i class="la la-trash">
-                                                    <label for="">Hapus</label>
+                                        {{-- <a href="/pengadaan/cetakPdf/{{ $data->id }}">
+                                            <button class="dropdown-item btn btn-outline-info">
+                                                <i class="la la-edit">
+                                                    <label for="">Download Laporan</label>
                                                 </i>
                                             </button>
-                                        </div>
+                                        </a> --}}
+                                        @if ($data->status == 'Belum dikonfirmasi')
+                                            <a href="/pemindahan/editStatus/{{ $data->id }}">
+                                                <button class="dropdown-item btn btn-outline-warning">
+                                                    <i class="la la-check-square">
+                                                        <label for="">Approval</label>
+                                                    </i>
+                                                </button>
+                                            </a>  
+                                        @endif
+                                        <button class="dropdown-item btn btn-outline-danger tombolHapus" value="{{ $data->id }}">
+                                            <i class="la la-trash">
+                                                <label for="">Hapus</label>
+                                            </i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </td>
-                        </tr>
-                        @endif
-                        @endforeach
-                    </tbody>
-                </table>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 {{-- modal delete --}}
@@ -121,7 +125,7 @@
                     @csrf
                     <!-- Modal Header -->
                     <div class="modal-header bg-info">
-                        <h4 class="modal-title text-white">Apakah anda yakin ingin menghapus Asset ini ?</h4>
+                        <h4 class="modal-title text-white">Apakah anda yakin ingin menghapus Pemindahan ini ?</h4>
                         <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
                     </div>
     
@@ -143,7 +147,7 @@
 <script>
 $(document).on("click", ".tombolHapus", function(){
         var id = $(this).val();
-    $("#deleteForm").attr("action", "/asset/destroy/"+ id);
+    $("#deleteForm").attr("action", "/pemindahan/destroy/"+ id);
     $("#deleteId").val(id);
     $("#delete").modal();
 });

@@ -12,11 +12,11 @@ class DetailPemeliharaan extends Model
 
     public function pemeliharaanRutin()
     {
-        return $this->belongsTo('App\PemeliharaanRutin');
+        return $this->belongsTo('App\PemeliharaanRutin', 'id_pemeliharaan_rutin');
     }
 
     public function asset()
     {
-        return $this->belongsTo('App\Asset');
+        return $this->belongsTo('App\Asset', 'id_asset');
     }
 }

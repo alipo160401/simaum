@@ -108,7 +108,17 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('edit/{id}', 'PemeliharaanRutinController@edit');
         Route::post('update/{id}', 'PemeliharaanRutinController@update');
         Route::post('destroy/{id}', 'PemeliharaanRutinController@destroy');
+        Route::get('{id}', 'PemeliharaanRutinController@show');      
         
+    });
+
+    Route::group(['prefix' => '/detailPemeliharaan'], function(){
+
+        Route::post('store', 'DetailPemeliharaanController@store');   
+        Route::get('edit/{id}', 'DetailPemeliharaanController@edit');
+        Route::post('update/{id}', 'DetailPemeliharaanController@update');
+        Route::post('destroy/{id}', 'DetailPemeliharaanController@destroy');
+
     });
 
     Route::group(['prefix' => '/perbaikan'], function(){
@@ -119,6 +129,53 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('edit/{id}', 'PerbaikanController@edit');
         Route::post('update/{id}', 'PerbaikanController@update');
         Route::post('destroy/{id}', 'PerbaikanController@destroy');
+        Route::get('{id}', 'PerbaikanController@show');      
+    });
+
+    Route::group(['prefix' => '/detailPerbaikan'], function(){
+
+        Route::post('store', 'DetailPerbaikanController@store');   
+        Route::get('edit/{id}', 'DetailPerbaikanController@edit');
+        Route::post('update/{id}', 'DetailPerbaikanController@update');
+        Route::post('destroy/{id}', 'DetailPerbaikanController@destroy');
+
+    });
+
+
+    Route::group(['prefix' => '/perbaikan'], function(){
+        
+        Route::get('index', 'PerbaikanController@index');
+        Route::get('create', 'PerbaikanController@create');
+        Route::post('store', 'PerbaikanController@store');
+        Route::get('edit/{id}', 'PerbaikanController@edit');
+        Route::post('update/{id}', 'PerbaikanController@update');
+        Route::post('destroy/{id}', 'PerbaikanController@destroy');
+        
+    });
+
+    Route::group(['prefix' => '/pemindahan'], function(){
+        
+        Route::get('index', 'PemindahanController@index');
+        Route::get('create', 'PemindahanController@create');
+        Route::post('store', 'PemindahanController@store');
+        Route::get('edit/{id}', 'PemindahanController@edit');
+        Route::post('update/{id}', 'PemindahanController@update');
+        Route::post('destroy/{id}', 'PemindahanController@destroy');
+        Route::get('editStatus/{id}', 'PemindahanController@editStatus');
+        Route::post('updateStatus/{id}', 'PemindahanController@updateStatus');
+        
+    });
+
+    Route::group(['prefix' => '/pemusnahan'], function(){
+        
+        Route::get('index', 'PemusnahanController@index');
+        Route::get('create', 'PemusnahanController@create');
+        Route::post('store', 'PemusnahanController@store');
+        Route::get('edit/{id}', 'PemusnahanController@edit');
+        Route::post('update/{id}', 'PemusnahanController@update');
+        Route::post('destroy/{id}', 'PemusnahanController@destroy');
+        Route::get('editStatus/{id}', 'PemusnahanController@editStatus');
+        Route::post('updateStatus/{id}', 'PemusnahanController@updateStatus');
         
     });
 

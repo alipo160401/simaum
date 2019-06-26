@@ -17,11 +17,11 @@ class CreatePemeliharaanRutinsTable extends Migration
             $table->increments('id');
             $table->integer('id_vendor')->unsigned();
             $table->string('no_pengajuan');
-            $table->string('total_harga_real');
-            $table->string('total_harga_estimasi');
-            $table->string('invoice');
-            $table->string('berita_acara');
-            $table->string('tanggal_beli');
+            $table->string('total_harga_real')->nullable();
+            $table->string('total_harga_estimasi')->nullable();;
+            $table->string('invoice')->nullable();;
+            $table->string('berita_acara')->nullable();;
+            $table->string('tanggal_beli')->nullable();;
             $table->string('status');
             $table->timestamps();
 

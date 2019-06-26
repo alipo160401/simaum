@@ -47,7 +47,12 @@ class DetailPerbaikanController extends Controller
             'harga_estimasi' => $request['harga_estimasi'],
         ]);
 
-        return redirect('/detailPerbaikan/index')->with('OK', 'Berhasil menambah Detail Perbaikan.');
+        $perbaikan = Perbaikan::find($request['id_perbaikan']);
+        $perbaikan->update([
+            'total_harga_estimasi' => $perbaikan->total_harga_estimasi + $request['harga_estimasi']
+        ]);
+
+        return redirect('/perbaikan/'. $perbaikan->id)->with('OK', 'Berhasil menambah barang.');
     }
 
     /**
@@ -67,10 +72,9 @@ class DetailPerbaikanController extends Controller
      * @param  \App\DetailPerbaikan  $detailPerbaikan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit($id)
     {
-        $data['detailPerbaikan'] = DetailPerbaikan::find($request['id']);
-        $data['perbaikan'] = Perbaikan::all();
+        $data['detailPerbaikan'] = DetailPerbaikan::find($id);
 
         return view('detailPerbaikan.edit', $data);
     }
@@ -82,9 +86,15 @@ class DetailPerbaikanController extends Controller
      * @param  \App\DetailPerbaikan  $detailPerbaikan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DetailPerbaikan $detailPerbaikan)
+    public function update(Request $request, $id)
     {
-        $detailPerbaikan = DetailPerbaikan::find($request['id']);
+        $Perbaikan = Perbaikan::find($request['id_perbaikan']);
+        $detailPerbaikan = DetailPerbaikan::find($id);
+        
+        $Perbaikan->update([
+            'total_harga_estimasi' => $Perbaikan->total_harga_estimasi - $detailPerbaikan->harga_estimasi + $request['harga_estimasi'],
+        ]);
+
         $detailPerbaikan->update([
             'id_perbaikan' => $request['id_perbaikan'],
             'id_asset' => $request['id_asset'],
@@ -103,6 +113,10 @@ class DetailPerbaikanController extends Controller
     public function destroy(Request $request)
     {
         $detailPerbaikan = DetailPerbaikan::find($request['id']);
+        $perbaikan = Perbaikan::find($detailPerbaikan->id_perbaikan);
+        $perbaikan->update([
+            'total_harga_estimasi' => $perbaikan->total_harga_estimasi - $detailPerbaikan->harga_estimasi,
+        ]);
         $detailPerbaikan->delete();
         return redirect()->back()->with('OK', 'Berhasil menghapus Detail Perbaikan!'); 
     }

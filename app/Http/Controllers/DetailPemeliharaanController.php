@@ -47,7 +47,12 @@ class DetailPemeliharaanController extends Controller
             'harga_estimasi' => $request['harga_estimasi'],
         ]);
 
-        return redirect('/detailPemeliharaan/index')->with('OK', 'Berhasil menambah Detail Pemeliharaan.');
+        $pemeliharaanRutin = PemeliharaanRutin::find($request['id_pemeliharaan_rutin']);
+        $pemeliharaanRutin->update([
+            'total_harga_estimasi' => $pemeliharaanRutin->total_harga_estimasi + $request['harga_estimasi']
+        ]);
+
+        return redirect('/pemeliharaanRutin/'. $pemeliharaanRutin->id)->with('OK', 'Berhasil menambah barang.');
     }
 
     /**
@@ -67,10 +72,9 @@ class DetailPemeliharaanController extends Controller
      * @param  \App\DetailPemeliharaan  $detailPemeliharaan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit($id)
     {
-        $data['detailPemeliharaan'] = DetailPemeliharaan::find($request['id']);
-        $data['pemeliharaanRutin'] = PemeliharaanRutin::all();
+        $data['detailPemeliharaan'] = DetailPemeliharaan::find($id);
 
         return view('detailPemeliharaan.edit', $data);
     }
@@ -82,9 +86,15 @@ class DetailPemeliharaanController extends Controller
      * @param  \App\DetailPemeliharaan  $detailPemeliharaan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DetailPemeliharaan $detailPemeliharaan)
+    public function update(Request $request, $id)
     {
-        $detailPemeliharaan = DetailPemeliharaan::find($request['id']);
+        $pemeliharaanRutin = PemeliharaanRutin::find($request['id_pemeliharaan_rutin']);
+        $detailPemeliharaan = DetailPemeliharaan::find($id);
+        
+        $pemeliharaanRutin->update([
+            'total_harga_estimasi' => $pemeliharaanRutin->total_harga_estimasi - $detailPemeliharaan->harga_estimasi + $request['harga_estimasi'],
+        ]);
+
         $detailPemeliharaan->update([
             'id_pemeliharaan_rutin' => $request['id_pemeliharaan_rutin'],
             'id_asset' => $request['id_asset'],
@@ -103,7 +113,11 @@ class DetailPemeliharaanController extends Controller
     public function destroy(Request $request)
     {
         $detailPemeliharaan = DetailPemeliharaan::find($request['id']);
+        $pemeliharaanRutin = PemeliharaanRutin::find($detailPemeliharaan->id_pemeliharaan_rutin);
+        $pemeliharaanRutin->update([
+            'total_harga_estimasi' => $pemeliharaanRutin->total_harga_estimasi - $detailPemeliharaan->harga_estimasi,
+        ]);
         $detailPemeliharaan->delete();
-        return redirect()->back()->with('OK', 'Berhasil menghapus Detail Pemeliharaan!'); 
+        return redirect()->back()->with('OK', 'Berhasil menghapus Detail Pemeliharaan Rutin!'); 
     }
 }

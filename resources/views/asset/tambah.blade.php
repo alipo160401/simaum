@@ -138,7 +138,12 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label >Kondisi</label>
-                                        <input type="text" class="form-control" placeholder="Kondisi" name="kondisi" required>
+                                        <select name="kondisi" id="kondisi" class="form-control" required>
+                                            <option value="Baru">Baru</option>
+                                            <option value="Sedang digunakkan">Sedang digunakkan</option>
+                                            <option value="Rusak(bisa diperbaiki)">Rusak(bisa diperbaiki)</option>
+                                            <option value="Rusak(tidak bisa diperbaiki)">Rusak(tidak bisa diperbaiki)</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

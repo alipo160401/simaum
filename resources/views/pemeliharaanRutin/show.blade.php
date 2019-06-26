@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title', 'Pengadaan')
+@section('title', 'Pemeliharaan')
 
 @section('style')
 
@@ -8,13 +8,13 @@
 
 @section('content-header')
 <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-    <h3 class="content-header-title mb-0 d-inline-block">Data Pengadaan</h3>
+    <h3 class="content-header-title mb-0 d-inline-block">Data Pemeliharaan</h3>
     <div class="row breadcrumbs-top d-inline-block">
         <div class="breadcrumb-wrapper col-12">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/pengadaan/index">Home</a>
+                <li class="breadcrumb-item"><a href="/pemeliharaanRutin/index">Home</a>
                 </li>
-                <li class="breadcrumb-item active">Pengadaan
+                <li class="breadcrumb-item active">Pemeliharaan
                 </li>
             </ol>
         </div>
@@ -35,21 +35,21 @@
                         <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                     </ul>
                 </div>
-                <h4 class="card-title">Form Pengajuan Pengadaan</h4>
+                <h4 class="card-title">Form Pengajuan Pemeliharaan</h4>
             </div>
             <div class="card-content collpase show">
                 <div class="card-body">
                     <div class="form-body">
                         <div class="form-group">
                             <label >Nomor Pengajuan</label>
-                            <input type="text"  class="form-control" placeholder="Nomor Pengajuan" name="no_pengajuan" value="{{ $pengadaan->no_pengajuan }}" readonly>
+                            <input type="text"  class="form-control" placeholder="Nomor Pengajuan" name="no_pengajuan" value="{{ $pemeliharaanRutin->no_pengajuan }}" readonly>
                         </div>
                         <div class="form-group">
                             <label >Vendor</label>
                             <select name="id_vendor" id="id_vendor" class="form-control" readonly>
                                 @foreach ($vendor as $item)
                                 
-                                    <option value="{{ $item->id }}" {{ $item->id == $pengadaan->id_vendor ? 'selected' : '' }}>{{ $item->nama }}, Bidang Pekerjaan: {{ $item->bidang_pekerjaan }}, PIC Vendor: {{ $item->pic_vendor }}</option>
+                                    <option value="{{ $item->id }}" {{ $item->id == $pemeliharaanRutin->id_vendor ? 'selected' : '' }}>{{ $item->nama }}, Bidang Pekerjaan: {{ $item->bidang_pekerjaan }}, PIC Vendor: {{ $item->pic_vendor }}</option>
 
                                 @endforeach
                             </select>
@@ -60,12 +60,12 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp.</span>
                                 </div>
-                                <input type="text" class="form-control" name="total_harga_estimasi" value="{{ $pengadaan->total_harga_estimasi }}" readonly>
+                                <input type="text" class="form-control" name="total_harga_estimasi" value="{{ $pemeliharaanRutin->total_harga_estimasi }}" readonly>
                             </div>                        
                         </div>
-                        @if ($pengadaan->total_harga_estimasi != null)
+                        @if ($pemeliharaanRutin->total_harga_estimasi != null)
                         <div class="form-actions">
-                            <a href="/pengadaan/index">
+                            <a href="/pemeliharaanRutin/index">
                                 <button class="btn btn-outline-primary" style="width: 100% !important;">
                                     <i class="ft-check"></i> Selesai
                                 </button>
@@ -93,12 +93,20 @@
             </div>
             <div class="card-content collpase show">
                 <div class="card-body">
-                    <form action="/detailPengadaan/store" method="post">
+                    <form action="/detailPemeliharaan/store" method="post">
                         @csrf
-                        <input type="hidden" name="id_pengadaan" value="{{ $pengadaan->id }}">
+                        <input type="hidden" name="id_pemeliharaan_rutin" value="{{ $pemeliharaanRutin->id }}">
                         <div class="form-group">
-                            <label>Nama Barang</label>
-                            <input type="text" name="nama_barang" class="form-control" required>
+                            <label>Barang</label>
+                            <select name="id_asset" id="id_asset" class="form-control">
+                                @foreach ($asset as $item)
+                                    {{-- @if ( $item->kondisi == 'Rusak(tidak bisa diperbaiki)' ) --}}
+                                
+                                    <option value="{{ $item->id }}">{{ $item->nama }},Kode :{{ $item->kode }},Kondisi :{{ $item->kondisi }}</option>
+                                
+                                    {{-- @endif --}}
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Harga Estimasi</label>
@@ -142,9 +150,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($pengadaan->detail_pengadaan as $data)
+                            @foreach ($pemeliharaanRutin->detail_pemeliharaan as $data)
                                 <tr>
-                                    <td>{{ $data->nama_barang }}</td>
+                                    <td>{{ $data->asset->nama }},Kode: {{ $data->asset->kode }},Kondisi: {{ $data->asset->kondisi }}</td>
                                     <td>{{ $data->harga_estimasi }}</td>
                                     <td>
                                         <div class="btn-group text-center">
@@ -153,7 +161,7 @@
                                                 <i class="la la-gear"></i>
                                             </button>
                                             <div class="dropdown-menu" x-placement="button-start">
-                                                <a href="/detailPengadaan/edit/{{ $data->id }}">
+                                                <a href="/detailPemeliharaan/edit/{{ $data->id }}">
                                                     <button class="dropdown-item btn btn-outline-info">
                                                         <i class="la la-edit">
                                                             <label for="">Edit</label>
@@ -209,7 +217,7 @@
     <script>
     $(document).on("click", ".tombolHapus", function(){
         var id = $(this).val();
-        $("#deleteForm").attr("action", "/detailPengadaan/destroy/"+ id);
+        $("#deleteForm").attr("action", "/detailPemeliharaan/destroy/"+ id);
         $("#deleteId").val(id);
         $("#delete").modal();
     });

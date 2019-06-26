@@ -99,35 +99,35 @@
                     </a>
                 </li>
                 <li class="nav-item has-sub"><a href=""><i class="la la-envelope"></i><span class="menu-title"
-                    data-i18n="nav.dash.main">Administrasi</span><span
-                    class="badge badge badge-info badge-pill float-right mr-2">4</span></a>
+                    data-i18n="nav.dash.main">Pengajuan</span><span
+                    class="badge badge badge-info badge-pill float-right mr-2">5</span></a>
                     <ul class="menu-content" style="">
-                        <li class=""><a class="menu-item" href="/pemilihanRutin/index"
-                            data-i18n="nav.dash.ecommerce">Pemilihan Rutin</a>
+                        <li class=""><a class="menu-item" href="/pengadaan/index" data-i18n="nav.dash.crypto">Pengadaan</a>
+                        </li>
+                        <li class=""><a class="menu-item" href="/pemeliharaanRutin/index" data-i18n="nav.dash.ecommerce">Pemeliharaan Rutin</a>
                         </li>
                         <li class=""><a class="menu-item" href="/perbaikan/index" data-i18n="nav.dash.crypto">Perbaikan</a>
                         </li>
-                        {{-- <li class=""><a class="menu-item" href="/infus/index" data-i18n="nav.dash.sales">Infus</a>
-                        </li>
                         <li class=""><a class="menu-item" href="/pemusnahan/index" data-i18n="nav.dash.sales">Pemusnahan</a>
-                        </li> --}}
+                        </li>
+                        <li class=""><a class="menu-item" href="/pemindahan/index" data-i18n="nav.dash.sales">Pemindahan</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item has-sub"><a href=""><i class="la la-book"></i><span class="menu-title"
                     data-i18n="nav.dash.main">Asset</span><span
-                    class="badge badge badge-info badge-pill float-right mr-2">2</span></a>
+                    class="badge badge badge-info badge-pill float-right mr-2">4</span></a>
                     <ul class="menu-content" style="">
+                        </li>
+                        <li class=""><a class="menu-item" href="/tanah/index" data-i18n="nav.dash.sales">Tanah</a>
+                        </li>
+                        <li class=""><a class="menu-item" href="/gedung/index" data-i18n="nav.dash.sales">Gedung</a>
                         </li>
                         <li class=""><a class="menu-item" href="/ruang/index" data-i18n="nav.dash.sales">Ruang</a>
                         </li>
                         <li class=""><a class="menu-item" href="/asset/index" data-i18n="nav.dash.sales">Asset</a>
                         </li>
                     </ul>
-                </li>
-                <li>
-                    <a class="menu-item" href="/pengadaan/index" data-i18n="nav.dash.sales">
-                        <i class="la la-building"></i>Pengadaan
-                    </a>
                 </li>
                 <li>
                     <a class="menu-item" href="/shopingList/index" data-i18n="nav.dash.sales">
@@ -161,7 +161,7 @@
     <footer class="footer footer-static footer-light navbar-border navbar-shadow">
             <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
                 <span class="float-md-left d-block d-md-inline-block">Copyright  &copy; 2018 
-                    <a class="text-bold-800 grey darken-2" href="#">Muhammad Alif Alhady H</a>, All rights reserved. 
+                    <a class="text-bold-800 grey darken-2" href="#">101Creative.Team</a>, All rights reserved. 
                 </span>
                 <span class="float-md-right d-block d-md-inline-blockd-none d-lg-block">Hand-crafted & Made with 
                     <i class="ft-heart pink"></i>

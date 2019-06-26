@@ -129,7 +129,12 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label >Kondisi</label>
-                                        <input type="text" class="form-control" placeholder="Kondisi" name="kondisi" value="{{ $asset->kondisi }}">
+                                        <select name="kondisi" id="kondisi" class="form-control" required>
+                                            <option {{ $asset->kondisi == 'Baru' ? 'selected' : '' }} value="Baru">Baru</option>
+                                            <option {{ $asset->kondisi == 'Sedang digunakkan' ? 'selected' : '' }} value="Sedang digunakkan">Sedang digunakkan</option>
+                                            <option {{ $asset->kondisi == 'Rusak(bisa diperbaiki)' ? 'selected' : '' }} value="Rusak(bisa diperbaiki)">Rusak(bisa diperbaiki)</option>
+                                            <option {{ $asset->kondisi == 'Rusak(tidak bisa diperbaiki)' ? 'selected' : '' }} value="Rusak(tidak bisa diperbaiki)">Rusak(tidak bisa diperbaiki)</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

@@ -47,6 +47,28 @@ Route::group(['middleware' => 'auth'], function(){
             
         });
 
+    Route::group(['prefix' => '/tanah'], function(){
+        
+        Route::get('index', 'TanahController@index');
+        Route::get('create', 'TanahController@create');
+        Route::post('store', 'TanahController@store');
+        Route::get('edit/{id}', 'TanahController@edit');
+        Route::post('update/{id}', 'TanahController@update');
+        Route::post('destroy/{id}', 'TanahController@destroy');
+        
+    });
+
+    Route::group(['prefix' => '/gedung'], function(){
+        
+        Route::get('index', 'GedungController@index');
+        Route::get('create', 'GedungController@create');
+        Route::post('store', 'GedungController@store');
+        Route::get('edit/{id}', 'GedungController@edit');
+        Route::post('update/{id}', 'GedungController@update');
+        Route::post('destroy/{id}', 'GedungController@destroy');
+        
+    });
+
     Route::group(['prefix' => '/ruang'], function(){
         
         Route::get('index', 'RuangController@index');

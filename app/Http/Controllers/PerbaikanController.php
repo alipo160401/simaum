@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Perbaikan;
 use App\Vendor;
+use App\Asset;
 use Illuminate\Http\Request;
 
 class PerbaikanController extends Controller
@@ -40,7 +41,7 @@ class PerbaikanController extends Controller
      */
     public function store(Request $request)
     {
-        Perbaikan::create([
+        $perbaikan = Perbaikan::create([
             'id_vendor' => $request['id_vendor'],
             'no_pengajuan' => $request['no_pengajuan'],
             'status' => 'Belum dikonfirmasi',
@@ -51,7 +52,7 @@ class PerbaikanController extends Controller
             'tanggal_beli' => $request['tanggal_beli'],
         ]);
 
-        return redirect('/perbaikan/index')->with('OK', 'Berhasil menambah Pengajuan Perbaikan.');
+        return redirect('/perbaikan/'.$perbaikan->id)->with('OK', 'Silahkan tambah list barang.');
     }
 
     /**
@@ -60,9 +61,13 @@ class PerbaikanController extends Controller
      * @param  \App\Perbaikan  $perbaikan
      * @return \Illuminate\Http\Response
      */
-    public function show(Perbaikan $perbaikan)
+    public function show($id)
     {
-        //
+        $data['perbaikan'] = Perbaikan::with('vendor', 'detail_perbaikan', 'asset')->where('id', $id)->first();
+        $data['vendor'] = Vendor::all();
+        $data['asset'] = Asset::all();
+
+        return view('perbaikan.show', $data);
     }
 
     /**

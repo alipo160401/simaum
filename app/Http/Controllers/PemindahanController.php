@@ -121,7 +121,7 @@ class PemindahanController extends Controller
         }
             
             
-        return redirect('/pemindahan/index')->with('OK', 'Status pemindahan telah di-update!');
+        return redirect('/pemindahan/index')->with('OK', 'Status pemindahan telah di-update, Barang telah di pindahkan.');
     }
 
     /**

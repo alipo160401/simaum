@@ -63,7 +63,7 @@
                                 <td>{{ $data->nama }}</td>
                                 <td>{{ $data->username }}</td>
                                 <td>{{ $data->nik }}</td>
-                                <td>{{ $data->no_telp }}</td>
+                                <td>+62 {{ $data->no_telp }}</td>
                                 <td>{{ $data->alamat }}</td>
                                 <td>{{ $data->role }}</td>
                                 <td>

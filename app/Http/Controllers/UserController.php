@@ -41,7 +41,7 @@ class UserController extends Controller
             'password' => bcrypt($request['password'])
         ]); 
 
-        return redirect('user.index')->with('OK', 'Berhasil menambah User!');
+        return redirect('/user/index')->with('OK', 'Berhasil menambah User!');
     }
 
     public function edit(Request $request)

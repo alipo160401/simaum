@@ -38,6 +38,11 @@ class RuangController extends Controller
      */
     public function store(Request $request)
     {
+        $ruang = Ruang::where('kode', $request['kode'])->first();
+        if ($ruang != null) {
+            return redirect()->back()->with('ERR', 'Kode Ruang telah digunakan, silahkan gunakan Kode yang lain');
+        }
+
         Ruang::create([
             'nama' => $request['nama'],
             'kode' => $request['kode'],

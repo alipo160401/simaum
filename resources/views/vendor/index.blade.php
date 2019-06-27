@@ -64,7 +64,7 @@
                                 <td>{{ $data->nama }}</td>
                                 <td>{{ $data->alamat }}</td>
                                 <td>{{ $data->bidang_pekerjaan }}</td>
-                                <td>{{ $data->no_hp }}</td>
+                                <td>+62 {{ $data->no_hp }}</td>
                                 <td>{{ $data->kontak }}</td>
                                 <td>{{ $data->pic_vendor }}</td>
                                 <td>{{ $data->npwp }}</td>

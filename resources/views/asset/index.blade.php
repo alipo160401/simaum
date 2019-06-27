@@ -74,10 +74,10 @@
                                 <td>{{ $data->jenis }}</td>
                                 <td>{{ $data->deskripsi }}</td>
                                 <td>{{ $data->tanggal_beli }}</td>
-                                <td>{{ $data->value_beli }}</td>
-                                <td>{{ $data->umur_ekonomis }}</td>
-                                <td>{{ $data->penyusutan }}</td>
-                                <td>{{ $data->value_sekarang }}</td>
+                                <td>Rp. {{ $data->value_beli }}</td>
+                                <td>{{ $data->umur_ekonomis }} tahun</td>
+                                <td>Rp. {{ $data->penyusutan }}</td>
+                                <td>Rp. {{ $data->value_sekarang }}</td>
                                 <td>{{ $data->kondisi }}</td>
                                 <td>
                                     <div class="btn-group text-center">

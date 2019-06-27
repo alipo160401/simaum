@@ -27,10 +27,10 @@ class DatabaseSeeder extends Seeder
     {
         User::create([
             'nama' => 'Dicky',
-            'nik' => '123',
-            'no_telp' => '0811',
-            'alamat' => 'Jalan Jalan',
-            'role' => 'P3',
+            'nik' => '1902837465',
+            'no_telp' => '8115919454',
+            'alamat' => 'Jl. Pupuk Baru',
+            'role' => 'Kabiro sarana & prasarana(P3)',
             'username' => 'dicky',
             'password' => bcrypt('1')
         ]);

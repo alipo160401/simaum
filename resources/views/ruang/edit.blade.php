@@ -53,7 +53,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Kode Ruang</label>
-                                        <input type="text"  class="form-control" name="kode" value="{{ $ruang->kode }}">
+                                        <input type="text"  class="form-control" name="kode" value="{{ $ruang->kode }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-12">

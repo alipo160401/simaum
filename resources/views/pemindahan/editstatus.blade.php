@@ -62,22 +62,22 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Nama Surat</label>
-                                        <input type="text" class="form-control" placeholder="Nama Surat" name="nama_surat"
+                                        <label>Nama Pemindahan</label>
+                                        <input type="text" class="form-control" placeholder="Nama Pemindahan" name="nama_surat"
                                             value="{{ $pemindahan->nama_surat }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Nomor Surat</label>
-                                        <input type="text" class="form-control" placeholder="Nomor Surat" name="no_surat"
+                                        <label>Nomor Pemindahan</label>
+                                        <input type="text" class="form-control" placeholder="Nomor Pemindahan" name="no_surat"
                                             value="{{ $pemindahan->no_surat }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Jenis Surat</label>
-                                        <input type="text" class="form-control" placeholder="Jenis Surat"
+                                        <label>Jenis Pemindahan</label>
+                                        <input type="text" class="form-control" placeholder="Jenis Pemindahan"
                                             name="jenis_surat" value="{{ $pemindahan->jenis_surat }}" readonly>
                                     </div>
                                 </div>

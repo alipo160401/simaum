@@ -64,7 +64,17 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label >Harga Barang</label>
-                                        <input type="text" class="form-control" placeholder="Harga Barang" name="harga_barang" required>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="harga_barang" required onkeydown="return ( event.ctrlkey || event.altkey
+                                            || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                                            || (95<event.keyCode && event.keyCode<106)
+                                            || (event.keyCode==8) || (event.keyCode==9)
+                                            || (event.keyCode>34) && (event.keyCode<40)
+                                            || (event.keyCode==46) )">
+                                        </div>                        
                                     </div>
                                 </div>
                                 <div class="col-md-12">

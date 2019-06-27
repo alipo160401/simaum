@@ -61,7 +61,7 @@
                                         <select name="id_ruang" id="id_ruang" class="form-control">
                                             @foreach ($ruang as $item)
                                             
-                                                <option value="{{ $item->id }}">{{ $item->nama }},Kode :{{ $item->kode }},Jenis :{{ $item->jenis }},</option>
+                                                <option value="{{ $item->id }}">{{ $item->nama }},Kode :{{ $item->kode }},Jenis :{{ $item->jenis }}</option>
 
                                             @endforeach
                                         </select>
@@ -69,20 +69,20 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label >Nama Surat</label>
-                                        <input type="text" class="form-control" placeholder="Nama Surat" name="nama_surat" required>
+                                        <label >Nama Pemindahan</label>
+                                        <input type="text" class="form-control" placeholder="Nama Pemindahan" name="nama_surat" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label >Nomor Surat</label>
-                                        <input type="text" class="form-control" placeholder="Nomor Surat" name="no_surat" required>
+                                        <label >Nomor Pemindahan</label>
+                                        <input type="text" class="form-control" placeholder="Nomor Pemindahan" name="no_surat" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label >Jenis Surat</label>
-                                        <input type="text" class="form-control" placeholder="Jenis Surat" name="jenis_surat" required>
+                                        <label >Jenis Pemindahan</label>
+                                        <input type="text" class="form-control" placeholder="Jenis Pemindahan" name="jenis_surat" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">

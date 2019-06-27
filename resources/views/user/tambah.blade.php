@@ -39,31 +39,35 @@
             <div class="card-content collpase show">
                 <div class="card-body">
                     <form action="/user/store" class="form" method="POST">
-                      @csrf
+                        @csrf
                         <div class="form-body">
-                          <h4 class="form-section">Tambah User</h4>
+                            <h4 class="form-section">Tambah User</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="role" class="">Role</label>
                                         <select name="role" id="role" class="form-control" required>
-                                            <option value="P3">(P3)</option>
-                                            <option value="P2">(P2)</option>
-                                            <option value="P1">(P1)</option>
+                                            <option value="Kabag perencanaan & pengawasan(P1)">Kabag perencanaan &
+                                                pengawasan(P1)</option>
+                                            <option value="Kabag perencanaan & pemeliharaan(P2)">Kabag perencanaan &
+                                                pemeliharaan(P2)</option>
+                                            <option value="Kabiro sarana & prasarana(P3)">Kabiro sarana & prasarana(P3)
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nama" class="">Nama</label>
-                                        <input type="text" id="nama" class="form-control" placeholder="Nama" name="nama" required>
+                                        <input type="text" id="nama" class="form-control" placeholder="Nama" name="nama"
+                                            required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nik" class="">NIK</label>
-                                        <input type="text" id="nik" class="form-control" placeholder="NIK" name="nik" min="1" required
-                                        onkeydown="return ( event.ctrlkey || event.altkey
+                                        <input type="text" id="nik" class="form-control" placeholder="NIK" name="nik"
+                                            min="1" required onkeydown="return ( event.ctrlkey || event.altkey
                                         || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
                                         || (95<event.keyCode && event.keyCode<106)
                                         || (event.keyCode==8) || (event.keyCode==9)
@@ -74,31 +78,39 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="no_telp" class="">No Telp</label>
-                                        <input type="text" id="no_telp" class="form-control" placeholder="No Telp" name="no_telp" min="1" required
-                                        onkeydown="return ( event.ctrlkey || event.altkey
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">+62</span>
+                                            </div>
+                                            <input type="text" id="no_telp" class="form-control" placeholder="8xxx"
+                                                name="no_telp" min="1" required onkeydown="return ( event.ctrlkey || event.altkey
                                         || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
                                         || (95<event.keyCode && event.keyCode<106)
                                         || (event.keyCode==8) || (event.keyCode==9)
                                         || (event.keyCode>34) && (event.keyCode<40)
                                         || (event.keyCode==46) )">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="alamat" class="">Alamat</label>
-                                        <input type="text" id="alamat" class="form-control" placeholder="Alamat" name="alamat" required>
+                                        <input type="text" id="alamat" class="form-control" placeholder="Alamat"
+                                            name="alamat" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="username" class="">Username</label>
-                                        <input type="text" id="username" class="form-control" placeholder="Username" name="username" required>
+                                        <input type="text" id="username" class="form-control" placeholder="Username"
+                                            name="username" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="password" class="">Password</label>
-                                        <input type="password" id="password" class="form-control" placeholder="Password" name="password" required>
+                                        <input type="password" id="password" class="form-control" placeholder="Password"
+                                            name="password" required>
                                     </div>
                                 </div>
                             </div>

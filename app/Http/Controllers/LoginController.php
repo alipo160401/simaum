@@ -20,9 +20,9 @@ class LoginController extends Controller
 
         $validUsername = User::where('username', $username)->first();
         if ($validUsername == null) {
-            return redirect()->back()->with('ERR', 'Username salah!');
+            return redirect()->back()->with('ERR', 'Username anda salah!');
         } elseif (!Auth::attempt($credentials)) {
-            return redirect()->back()->with('ERR', 'Password salah!');
+            return redirect()->back()->with('ERR', 'Password anda salah!');
         }
 
         return redirect()->route('check-role');
@@ -31,13 +31,13 @@ class LoginController extends Controller
     public function checkRole()
     {
         switch (Auth::user()->role) {
-            case 'P3':
+            case 'Kabiro sarana & prasarana(P3)':
                 return redirect('/user/index');
                 break;
-            case 'P2':
+            case 'Kabag perencanaan & pemeliharaan(P2)':
                 return redirect('/asset/index');
                 break;
-            case 'P1':
+            case 'Kabag perencanaan & pengawasan(P1)':
                 return redirect('/asset/index');
                 break;
 

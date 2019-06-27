@@ -71,13 +71,18 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="no_telp" class="">No Telp</label>
-                                        <input type="text" id="no_telp" class="form-control" name="no_telp" value="{{ $user->no_telp }}"
-                                        onkeydown="return ( event.ctrlkey || event.altkey
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">+62</span>
+                                            </div>
+                                            <input type="text" id="no_telp" class="form-control" placeholder="8xxx"
+                                                name="no_telp" value="{{ $user->no_telp }}" min="1" required onkeydown="return ( event.ctrlkey || event.altkey
                                         || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
                                         || (95<event.keyCode && event.keyCode<106)
                                         || (event.keyCode==8) || (event.keyCode==9)
                                         || (event.keyCode>34) && (event.keyCode<40)
                                         || (event.keyCode==46) )">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

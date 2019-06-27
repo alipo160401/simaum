@@ -49,9 +49,9 @@
                                 <th>No</th>
                                 <th>Data Barang</th>
                                 <th>Pemindahan Ruang</th>
-                                <th>Nama Surat</th>
-                                <th>Nomor Surat</th>
-                                <th>Jenis Ticket</th>
+                                <th>Nama Pemindahan</th>
+                                <th>Nomor Pemindahan</th>
+                                <th>Jenis Pemindahan</th>
                                 <th>PIC Pekerja</th>
                                 <th>Status</th>
                                 <th>Aksi</th>

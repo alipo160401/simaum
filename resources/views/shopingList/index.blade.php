@@ -62,7 +62,7 @@
                                 <td>{{ $data->nama_barang }}</td>
                                 <td>{{ $data->jenis_barang }}</td>
                                 <td>{{ $data->merek_barang }}</td>
-                                <td>{{ $data->harga_barang }}</td>
+                                <td>Rp. {{ $data->harga_barang }}</td>
                                 <td>{{ $data->spesifikasi }}</td>
                                 <td>
                                 <div class="btn-group text-center">

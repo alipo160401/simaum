@@ -109,7 +109,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label >Deskripsi</label>
-                                        <input type="text" class="form-control" placeholder="Deskripsi" name="deskripsi" required>
+                                        <input type="text" class="form-control" placeholder="Deskripsi" name="deskripsi">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -125,14 +125,25 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp.</span>
                                             </div>
-                                            <input type="text" class="form-control" placeholder="Value Beli" name="value_beli" required>
+                                            <input type="text" class="form-control" placeholder="Value Beli" name="value_beli" required onkeydown="return ( event.ctrlkey || event.altkey
+                                            || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                                            || (95<event.keyCode && event.keyCode<106)
+                                            || (event.keyCode==8) || (event.keyCode==9)
+                                            || (event.keyCode>34) && (event.keyCode<40)
+                                            || (event.keyCode==46) )">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label >Umur Ekonomis (Tahun)</label>
-                                        <input type="text" class="form-control" placeholder="Umur Ekonomis" name="umur_ekonomis" required>
+                                        <input type="text" id="umur_ekonomis" class="form-control" placeholder="Umur Ekonomis"
+                                            name="umur_ekonomis" min="1" required onkeydown="return ( event.ctrlkey || event.altkey
+                                    || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                                    || (95<event.keyCode && event.keyCode<106)
+                                    || (event.keyCode==8) || (event.keyCode==9)
+                                    || (event.keyCode>34) && (event.keyCode<40)
+                                    || (event.keyCode==46) )">
                                     </div>
                                 </div>
                                 <div class="col-md-12">

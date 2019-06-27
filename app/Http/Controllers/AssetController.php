@@ -50,6 +50,11 @@ class AssetController extends Controller
      */
     public function store(Request $request)
     {
+        $asset = Asset::where('kode', $request['kode'])->first();
+        if ($asset != null) {
+            return redirect()->back()->with('ERR', 'Kode Asset telah digunakan, silahkan gunakan Kode yang lain');
+        }
+
         $other = $request['sub_kategori_other'];
         if ($other != null && $other != '') {
             $request['sub_kategori'] = $other;

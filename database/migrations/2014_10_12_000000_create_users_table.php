@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('nik');
             $table->string('no_telp');
             $table->string('alamat');
-            $table->enum('role', ['P1', 'P2', 'P3']);
+            $table->enum('role', ['Kabag perencanaan & pengawasan(P1)', 'Kabag perencanaan & pemeliharaan(P2)', 'Kabiro sarana & prasarana(P3)']);
             $table->string('username')->unique();
             $table->string('password');
             $table->rememberToken();

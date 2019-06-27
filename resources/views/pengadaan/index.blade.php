@@ -3,7 +3,11 @@
 @section('title', 'Pengadaan')
 
 @section('style')
-
+    <style>
+        .status-box{
+            border-radius: 5px;
+        }
+    </style>
 @endsection
 
 @section('content-header')
@@ -69,7 +73,14 @@
                                 <td>{{ $data->invoice }}</td>
                                 <td>{{ $data->berita_acara }}</td>
                                 <td>{{ $data->tanggal_beli }}</td>
-                                <td>{{ $data->status }}</td>
+                                <td>
+                                    @if($data->status == 'Belum dikonfirmasi')
+                                        <p class="bg-warning text-white p-1 text-center status-box">{{ $data->status }}</span>
+                                    @elseif ($data->status == 'Pengajuan dikonfirmasi')                                
+                                        <p class="bg-success text-white p-1 text-center status-box">{{ $data->status }}</span>
+                                    @elseif ($data->status == 'Pengajuan ditolak')
+                                        <p class="bg-danger text-white p-1 text-center status-box">{{ $data->status }}</span>
+                                    @endif
                                 <td>
                                 <div class="btn-group text-center">
                                     <button type="button" class="btn btn-info round dropdown-toggle"
@@ -77,6 +88,13 @@
                                         <i class="la la-gear"></i>
                                     </button>
                                     <div class="dropdown-menu" x-placement="button-start">
+                                        <a href="/pengadaan/{{ $data->id }}">
+                                            <button class="dropdown-item btn btn-outline-info">
+                                                <i class="la la-search">
+                                                    <label for="">Detail</label>
+                                                </i>
+                                            </button>
+                                        </a>
                                         <a href="/pengadaan/edit/{{ $data->id }}">
                                             <button class="dropdown-item btn btn-outline-info">
                                                 <i class="la la-edit">

@@ -29,7 +29,7 @@ class PemindahanController extends Controller
      */
     public function create()
     {
-        $data['asset'] = Asset::with('ruang')->get();
+        $data['asset'] = Asset::with('ruang')->where('status_pemusnahan', '!=', null)->get();
         $data['ruang'] = Ruang::all();
 
         return view('pemindahan.tambah', $data);

@@ -28,7 +28,7 @@ class PemusnahanController extends Controller
      */
     public function create()
     {
-        $data['asset'] = Asset::all();
+        $data['asset'] = Asset::where('status_pemusnahan', '!=', null)->get();
 
         return view('pemusnahan.tambah', $data);
     }

@@ -41,6 +41,12 @@ class DetailPemeliharaanController extends Controller
      */
     public function store(Request $request)
     {
+        $barang = Asset::find($request['id_asset']);
+
+        if ($barang != null) {
+            return redirect('/pemeliharaanRutin/'. $pemeliharaanRutin->id)->with('ERR', 'Tidak dapat menambahkan barang yang sama.');
+        }
+        
         DetailPemeliharaan::create([
             'id_pemeliharaan_rutin' => $request['id_pemeliharaan_rutin'],
             'id_asset' => $request['id_asset'],

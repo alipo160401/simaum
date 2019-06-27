@@ -38,7 +38,7 @@
             </div>
             <div class="card-content collpase show">
                 <div class="card-body">
-                    <form action="/pengadaan/store" class="form" method="POST">
+                    <form action="/pengadaan/store" class="form" method="POST" enctype="multipart/form-data">
                       @csrf
                         <div class="form-body">
                           <h4 class="form-section">Tambah Pengadaan</h4>

@@ -80,11 +80,11 @@
                                     <div class="form-group">
                                         <label >Sub Kategori</label>
                                         <select name="sub_kategori" id="sub_kategori" class="form-control" required>
-                                            <option value="Tanah">Tanah</option>
-                                            <option value="Gedung">Gedung</option>
-                                            <option value="Kendaraan">Kendaraan</option>
-                                            <option value="Alat Kantor">Alat Kantor</option>
-                                            <option value="Fasilitas Perkuliahan">Fasilitas Perkuliahan</option>
+                                            <option value="Tanah" class="opsi-infrastruktur">Tanah</option>
+                                            <option value="Gedung" class="opsi-infrastruktur">Gedung</option>
+                                            <option value="Kendaraan" class="opsi-infrastruktur">Kendaraan</option>
+                                            <option value="Alat Kantor" class="opsi-inventaris">Alat Kantor</option>
+                                            <option value="Fasilitas Perkuliahan" class="opsi-inventaris">Fasilitas Perkuliahan</option>
                                             <option value="Other">Other</option>
                                         </select>
                                     </div>
@@ -99,10 +99,10 @@
                                     <div class="form-group">
                                         <label >Jenis</label>
                                         <select name="jenis" id="jenis" class="form-control" required>
-                                            <option value="Roda 2">Roda 2</option>
-                                            <option value="Roda 4">Roda 4</option>
-                                            <option value="Meubelair">Meubelair</option>
-                                            <option value="Elektronik">Elektronik</option>
+                                            <option value="Roda 2" class="opsi-kendaraan">Roda 2</option>
+                                            <option value="Roda 4" class="opsi-kendaraan">Roda 4</option>
+                                            <option value="Meubelair" class="opsi-bukan-kendaraan">Meubelair</option>
+                                            <option value="Elektronik" class="opsi-bukan-kendaraan">Elektronik</option>
                                         </select>
                                     </div>
                                 </div>
@@ -178,11 +178,41 @@
         $("#sub_kategori").on("change", function(){
             value = $(this).val();
             console.log(value);
+            if (value == "Kendaraan") {
+                $(".opsi-selain-kendaraan").hide();
+                $(".opsi-kendaraan").show();
+                $("#jenis option[value='Roda 2']").attr("selected", true);
+            }
+            if(value == "Tanah" || value == "Gedung"){
+                $("#jenis").hide();
+            }else{
+                $("#jenis").show();
+            }
             if (value == "Other") {
                 $("#sub_kategori_other").show();
             }else{
                 $("#sub_kategori_other").hide();
             };
+        });
+        $(".opsi-inventaris").hide();
+        $("#kategori").on("change", function(){
+            value = $(this).val();
+            console.log(value);
+            if (value == "Infrastruktur") {
+                $(".opsi-inventaris").hide();
+                $(".opsi-selain-kendaraan").hide();
+                $(".opsi-infrastruktur").show();
+                $(".opsi-kendaraan").show();
+                $("#sub_kategori option[value='Tanah']").attr("selected", true);
+                $("#jenis option[value='Roda 2']").attr("selected", true);
+            }else if(value == "Inventaris"){
+                $(".opsi-kendaraan").hide();
+                $(".opsi-infrastruktur").hide();
+                $(".opsi-inventaris").show();
+                $(".opsi-selain-kendaraan").show();
+                $("#sub_kategori option[value='Alat Kantor']").attr("selected", true);
+                $("#jenis option[value='Meubelair']").attr("selected", true);
+            }
         });
     </script>
 @endsection

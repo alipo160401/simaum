@@ -28,7 +28,7 @@ class PemusnahanController extends Controller
      */
     public function create()
     {
-        $data['asset'] = Asset::where('status_pemusnahan', '!=', null)->get();
+        $data['asset'] = Asset::where('status_pemusnahan', 'False')->where('kondisi', 'Rusak(tidak bisa diperbaiki)')->get();
 
         return view('pemusnahan.tambah', $data);
     }

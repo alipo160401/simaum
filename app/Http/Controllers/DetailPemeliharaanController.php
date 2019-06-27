@@ -41,6 +41,7 @@ class DetailPemeliharaanController extends Controller
      */
     public function store(Request $request)
     {
+        $pemeliharaanRutin = PemeliharaanRutin::find($request['id_pemeliharaan_rutin']);
         $barang = Asset::find($request['id_asset']);
 
         if ($barang != null) {
@@ -53,7 +54,6 @@ class DetailPemeliharaanController extends Controller
             'harga_estimasi' => $request['harga_estimasi'],
         ]);
 
-        $pemeliharaanRutin = PemeliharaanRutin::find($request['id_pemeliharaan_rutin']);
         $pemeliharaanRutin->update([
             'total_harga_estimasi' => $pemeliharaanRutin->total_harga_estimasi + $request['harga_estimasi']
         ]);

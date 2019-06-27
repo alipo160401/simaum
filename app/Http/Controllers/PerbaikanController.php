@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Perbaikan;
+use App\DetailPerbaikan;
 use App\Vendor;
 use App\Asset;
 use Illuminate\Http\Request;
@@ -44,7 +45,7 @@ class PerbaikanController extends Controller
         $perbaikan = Perbaikan::create([
             'id_vendor' => $request['id_vendor'],
             'no_pengajuan' => $request['no_pengajuan'],
-            'status' => 'Belum dikonfirmasi',
+            'status' => 'Proses pengajuan',
             'total_harga_real' => $request['total_harga_real'],
             'total_harga_estimasi' => $request['total_harga_estimasi'],
             'invoice' => $request['invoice'],
@@ -65,7 +66,7 @@ class PerbaikanController extends Controller
     {
         $data['perbaikan'] = Perbaikan::with('vendor', 'detail_perbaikan', 'asset')->where('id', $id)->first();
         $data['vendor'] = Vendor::all();
-        $data['asset'] = Asset::all();
+        $data['asset'] = Asset::where('status_pemusnahan', 'False')->where('kondisi', 'Rusak(bisa diperbaiki)')->get();
 
         return view('perbaikan.show', $data);
     }
@@ -91,16 +92,50 @@ class PerbaikanController extends Controller
      * @param  \App\Perbaikan  $perbaikan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Perbaikan $perbaikan)
+    public function update(Request $request, $id)
     {
-        $perbaikan = Perbaikan::find($request['id']);
+        $perbaikan = Perbaikan::find($id);
+
+        if (isset($_GET['status'])) 
+        {
+            if ($_GET['status'] == 'selesai') 
+            {
+                $perbaikan->update([
+                    'status' => 'Belum dikonfirmasi',
+                ]);
+                return redirect()->back()->with('OK', 'Berhasil mengirim pengajuan');
+            }
+            if ($_GET['status'] == 'dikonfirmasi') 
+            {
+                $perbaikan->update([
+                    'status' => 'Pengajuan dikonfirmasi',
+                ]);
+                return redirect()->back()->with('OK', 'Berhasil mengkonfirmasi pengajuan');
+            }
+            if ($_GET['status'] == 'ditolak') 
+            {
+                $perbaikan->update([
+                    'status' => 'Pengajuan ditolak',
+                ]);
+                return redirect()->back()->with('OK', 'Berhasil menolak pengajuan');
+            }
+        }
+
+        $validPath = '';
+        if ($request->file('berita_acara')) {
+            $berita_acara = $request->file('berita_acara');
+            $path = $berita_acara->store('/public/berita_acara'); // with /public on path
+            $filename = $berita_acara->hashName(); // remove the /public on path
+            $validPath = url('/').'/storage/berita_acara/' . $filename;    
+        }
+
         $perbaikan->update([
             'id_vendor' => $request['id_vendor'],
             'no_pengajuan' => $request['no_pengajuan'],
             'total_harga_real' => $request['total_harga_real'],
             'total_harga_estimasi' => $request['total_harga_estimasi'],
             'invoice' => $request['invoice'],
-            'berita_acara' => $request['berita_acara'],
+            'berita_acara' => $validPath,
             'tanggal_beli' => $request['tanggal_beli'],
         ]);
 

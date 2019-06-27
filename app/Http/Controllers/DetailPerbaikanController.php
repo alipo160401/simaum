@@ -41,6 +41,11 @@ class DetailPerbaikanController extends Controller
      */
     public function store(Request $request)
     {
+        $barang = Asset::find($request['id_asset']);
+        if ($barang != null) {
+            return redirect('/perbaikan/'. $perbaikan->id)->with('ERR', 'Tidak dapat menambahkan barang yang sama.');
+        }
+        
         DetailPerbaikan::create([
             'id_perbaikan' => $request['id_perbaikan'],
             'id_asset' => $request['id_asset'],

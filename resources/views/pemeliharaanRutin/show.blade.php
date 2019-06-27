@@ -20,6 +20,20 @@
         </div>
     </div>
 </div>
+<div class="content-header-right col-md-6 col-12">
+    <div class="btn-group float-md-right">
+        @if ($pemeliharaanRutin->status != 'Proses pengajuan')
+            <a href="/pemeliharaanRutin/index" class="btn btn-info">Kembali</a>        
+        @else
+            @if (count($pemeliharaanRutin->detail_pemeliharaan) > 0)
+                <form action="/pemeliharaanRutin/update/{{ $pemeliharaanRutin->id }}?status=selesai" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-info">Selesai</button>
+                </form>                
+            @endif
+        @endif
+    </div>
+</div>
 @endsection
 
 @section('content')
@@ -55,6 +69,14 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label >Tanggal Beli</label>
+                            <input type="text"  class="form-control" name="tanggal_pengajuan" value="{{ $pemeliharaanRutin->tanggal_beli ?? '-' }}" readonly>
+                        </div>    
+                        <div class="form-group">
+                            <label >Invoice</label>
+                            <input type="text"  class="form-control" name="no_pengajuan" value="{{ $pemeliharaanRutin->invoice ?? '-' }}" readonly>
+                        </div>    
+                        <div class="form-group">
                             <label>Total Harga Estimasi</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -63,15 +85,19 @@
                                 <input type="text" class="form-control" name="total_harga_estimasi" value="{{ $pemeliharaanRutin->total_harga_estimasi }}" readonly>
                             </div>                        
                         </div>
-                        @if ($pemeliharaanRutin->total_harga_estimasi != null)
-                        <div class="form-actions">
-                            <a href="/pemeliharaanRutin/index">
-                                <button class="btn btn-outline-primary" style="width: 100% !important;">
-                                    <i class="ft-check"></i> Selesai
-                                </button>
-                            </a>
+                        <div class="form-group">
+                            <label>Total Harga Real</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Rp.</span>
+                                </div>
+                                <input type="text" class="form-control" name="total_harga_estimasi" value="{{ $pemeliharaanRutin->total_harga_real ?? '-' }}" readonly>
+                            </div>                        
                         </div>
-                        @endif
+                        <div class="form-group">
+                            <label >Status</label>
+                            <input type="text"  class="form-control" name="status" value="{{ $pemeliharaanRutin->status ?? '-' }}" readonly>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -79,6 +105,7 @@
     </div>
 </div>
 <div class="row">
+    @if ($pemeliharaanRutin->status == 'Proses pengajuan')
     <div class="col-md-4">
         <div class="card">
             <div class="card-header">
@@ -100,11 +127,8 @@
                             <label>Barang</label>
                             <select name="id_asset" id="id_asset" class="form-control">
                                 @foreach ($asset as $item)
-                                    {{-- @if ( $item->kondisi == 'Rusak(tidak bisa diperbaiki)' ) --}}
-                                
                                     <option value="{{ $item->id }}">{{ $item->nama }},Kode :{{ $item->kode }},Kondisi :{{ $item->kondisi }}</option>
                                 
-                                    {{-- @endif --}}
                                 @endforeach
                             </select>
                         </div>
@@ -127,7 +151,8 @@
             </div>
         </div>
     </div>
-    <div class="col-md-8">
+    @endif
+    <div class="{{ $pemeliharaanRutin->status == 'Proses pengajuan' ? 'col-md-8' : 'col-md-12' }}">
         <div class="card">
             <div class="card-header">
                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
@@ -153,7 +178,7 @@
                             @foreach ($pemeliharaanRutin->detail_pemeliharaan as $data)
                                 <tr>
                                     <td>{{ $data->asset->nama }},Kode: {{ $data->asset->kode }},Kondisi: {{ $data->asset->kondisi }}</td>
-                                    <td>{{ $data->harga_estimasi }}</td>
+                                    <td>Rp. {{ $data->harga_estimasi }}</td>
                                     <td>
                                         <div class="btn-group text-center">
                                             <button type="button" class="btn btn-info round dropdown-toggle"
@@ -185,6 +210,17 @@
         </div>
     </div>
 </div>
+@if ($pemeliharaanRutin->status == 'Belum dikonfirmasi')
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn btn-success block" id="tombolKonfirmasi">Konfirmasi Pengajuan</button>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-danger block" id="tombolTolak">Tolak Pengajuan</button>
+        </div>
+    </div>
+@endif
+
 
 {{-- modal delete --}}
 <div class="modal fade" id="delete">
@@ -211,6 +247,56 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="confirm">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form id="confirmForm" action="/pemeliharaanRutin/update/{{ $pemeliharaanRutin->id }}?status=dikonfirmasi" method="POST">
+
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header bg-info">
+                    <h4 class="modal-title text-white">Apakah anda yakin ingin mengkonfirmasi Pemeliharaan ini ?</h4>
+                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" name="id" id="confirmId" class="btn btn-success round"> Yakin
+                    </button>
+                    <button type="button" class="btn btn-danger round" data-dismiss="modal"> Batal
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="reject">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form id="rejectForm" action="/pemeliharaanRutin/update/{{ $pemeliharaanRutin->id }}?status=ditolak" method="POST">
+
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header bg-info">
+                    <h4 class="modal-title text-white">Apakah anda yakin ingin menolak Pemeliharaan ini ?</h4>
+                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" name="id" id="rejectId" class="btn btn-success round"> Yakin
+                    </button>
+                    <button type="button" class="btn btn-danger round" data-dismiss="modal"> Batal
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('script')
@@ -221,5 +307,11 @@
         $("#deleteId").val(id);
         $("#delete").modal();
     });
+        $(document).on("click", "#tombolKonfirmasi", function(){
+            $("#confirm").modal();
+        });
+        $(document).on("click", "#tombolTolak", function(){
+            $("#confirm").modal();
+        });
     </script>
 @endsection

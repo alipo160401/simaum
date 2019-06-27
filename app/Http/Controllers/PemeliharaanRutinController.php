@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\PemeliharaanRutin;
+use App\DetailPemeliharaan;
 use App\Vendor;
 use App\Asset;
 use Illuminate\Http\Request;
@@ -44,7 +45,7 @@ class PemeliharaanRutinController extends Controller
        $pemeliharaanRutin = PemeliharaanRutin::create([
             'id_vendor' => $request['id_vendor'],
             'no_pengajuan' => $request['no_pengajuan'],
-            'status' => 'Belum dikonfirmasi',
+            'status' => 'Proses pengajuan',
             'total_harga_real' => $request['total_harga_real'],
             'total_harga_estimasi' => $request['total_harga_estimasi'],
             'invoice' => $request['invoice'],
@@ -65,7 +66,7 @@ class PemeliharaanRutinController extends Controller
     {
         $data['pemeliharaanRutin'] = PemeliharaanRutin::with('vendor', 'detail_pemeliharaan', 'asset')->where('id', $id)->first();
         $data['vendor'] = Vendor::all();
-        $data['asset'] = Asset::all();
+        $data['asset'] = Asset::where('status_pemusnahan', 'False')->get();
 
         return view('pemeliharaanRutin.show', $data);
     }
@@ -91,16 +92,50 @@ class PemeliharaanRutinController extends Controller
      * @param  \App\PemeliharaanRutin  $pemeliharaanRutin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PemeliharaanRutin $pemeliharaanRutin)
+    public function update(Request $request, $id)
     {
-        $pemeliharaanRutin = PemeliharaanRutin::find($request['id']);
+        $pemeliharaanRutin = PemeliharaanRutin::find($id);
+
+        if (isset($_GET['status'])) 
+        {
+            if ($_GET['status'] == 'selesai') 
+            {
+                $pemeliharaanRutin->update([
+                    'status' => 'Belum dikonfirmasi',
+                ]);
+                return redirect()->back()->with('OK', 'Berhasil mengirim pengajuan');
+            }
+            if ($_GET['status'] == 'dikonfirmasi') 
+            {
+                $pemeliharaanRutin->update([
+                    'status' => 'Pengajuan dikonfirmasi',
+                ]);
+                return redirect()->back()->with('OK', 'Berhasil mengkonfirmasi pengajuan');
+            }
+            if ($_GET['status'] == 'ditolak') 
+            {
+                $pemeliharaanRutin->update([
+                    'status' => 'Pengajuan ditolak',
+                ]);
+                return redirect()->back()->with('OK', 'Berhasil menolak pengajuan');
+            }
+        }
+
+        $validPath = '';
+        if ($request->file('berita_acara')) {
+            $berita_acara = $request->file('berita_acara');
+            $path = $berita_acara->store('/public/berita_acara'); // with /public on path
+            $filename = $berita_acara->hashName(); // remove the /public on path
+            $validPath = url('/').'/storage/berita_acara/' . $filename;    
+        }
+
         $pemeliharaanRutin->update([
             'id_vendor' => $request['id_vendor'],
             'no_pengajuan' => $request['no_pengajuan'],
             'total_harga_real' => $request['total_harga_real'],
             'total_harga_estimasi' => $request['total_harga_estimasi'],
             'invoice' => $request['invoice'],
-            'berita_acara' => $request['berita_acara'],
+            'berita_acara' => $validPath,
             'tanggal_beli' => $request['tanggal_beli'],
         ]);
 

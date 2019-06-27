@@ -38,7 +38,7 @@
             </div>
             <div class="card-content collpase show">
                 <div class="card-body">
-                    <form action="/perbaikan/update/{id}" class="form" method="POST">
+                    <form action="/perbaikan/update/{{ $perbaikan->id }}" class="form" method="POST" enctype="multipart/form-data">
                       @csrf
                     <input type="hidden" id="id" name="id" value="{{ $perbaikan->id }}">
                         <div class="form-body">

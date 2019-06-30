@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Ruang;
 use Illuminate\Http\Request;
+use App\Exports\RuangExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 
 class RuangController extends Controller
 {
@@ -19,6 +22,12 @@ class RuangController extends Controller
 
         return view('ruang.index', $data);
     }
+ 
+	public function exportExcel()
+	{
+		return Excel::download(new RuangExport, 'ruang.xlsx');
+	}
+
 
     /**
      * Show the form for creating a new resource.
@@ -69,6 +78,13 @@ class RuangController extends Controller
      * @param  \App\Ruang  $ruang
      * @return \Illuminate\Http\Response
      */
+    public function detail(Request $request)
+    {
+        $data['ruang'] = Ruang::find($request['id']);
+
+        return view('ruang.detail', $data);
+    }
+
     public function edit(Request $request)
     {
         $data['ruang'] = Ruang::find($request['id']);

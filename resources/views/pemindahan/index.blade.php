@@ -43,16 +43,12 @@
             </div>
             <div class="card-content collpase show">
                 <div class="card-body">
-                    <table class="table table-responsive datatable">
+                    <table class="table table-responsive d-md-table datatable">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Data Barang</th>
-                                <th>Pemindahan Ruang</th>
-                                <th>Nama Pemindahan</th>
-                                <th>Nomor Pemindahan</th>
-                                <th>Jenis Pemindahan</th>
-                                <th>PIC Pekerja</th>
+                                <th>Nomor Pengajuan</th>
+                                <th>Tanggal Beli</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -61,13 +57,18 @@
                             @foreach ($pemindahan as $data)
                             <tr>
                                 <td>{{ $nomor++ }}</td>
-                                <td>{{ $data->asset->nama }},Kode: {{ $data->asset->kode }},Ruang: {{ $data->asset->ruang->nama }}</td>
-                                <td>{{ $data->ruang->nama }}</td>
-                                <td>{{ $data->nama_surat }}</td>
-                                <td>{{ $data->no_surat }}</td>
-                                <td>{{ $data->jenis_surat }}</td>
-                                <td>{{ $data->pic_pekerja }}</td>
-                                <td>{{ $data->status }}</td>
+                                <td>{{ $data->no_pengajuan }}</td>
+                                <td>{{ $data->tanggal_beli }}</td>
+                                <td>
+                                    @if($data->status == 'Belum dikonfirmasi')
+                                        <p class="bg-warning text-white p-1 text-center status-box">{{ $data->status }}</span>
+                                    @elseif ($data->status == 'Pengajuan dikonfirmasi')                                
+                                        <p class="bg-success text-white p-1 text-center status-box">{{ $data->status }}</span>
+                                    @elseif ($data->status == 'Pengajuan ditolak')
+                                        <p class="bg-danger text-white p-1 text-center status-box">{{ $data->status }}</span>
+                                    @elseif ($data->status == 'Proses pengajuan')
+                                        <p class="bg-warning text-white p-1 text-center status-box">{{ $data->status }}</span>
+                                    @endif
                                 <td>
                                 <div class="btn-group text-center">
                                     <button type="button" class="btn btn-info round dropdown-toggle"
@@ -75,6 +76,7 @@
                                         <i class="la la-gear"></i>
                                     </button>
                                     <div class="dropdown-menu" x-placement="button-start">
+                                    @if ($data->status != "Pengajuan ditolak")
                                         <a href="/pemindahan/edit/{{ $data->id }}">
                                             <button class="dropdown-item btn btn-outline-info">
                                                 <i class="la la-edit">
@@ -82,22 +84,14 @@
                                                 </i>
                                             </button>
                                         </a>
-                                        {{-- <a href="/pengadaan/cetakPdf/{{ $data->id }}">
+                                    @endif
+                                        <a href="/pemindahan/{{ $data->id }}">
                                             <button class="dropdown-item btn btn-outline-info">
-                                                <i class="la la-edit">
-                                                    <label for="">Download Laporan</label>
+                                                <i class="la la-search">
+                                                    <label for="">Detail</label>
                                                 </i>
                                             </button>
-                                        </a> --}}
-                                        @if ($data->status == 'Belum dikonfirmasi')
-                                            <a href="/pemindahan/editStatus/{{ $data->id }}">
-                                                <button class="dropdown-item btn btn-outline-warning">
-                                                    <i class="la la-check-square">
-                                                        <label for="">Approval</label>
-                                                    </i>
-                                                </button>
-                                            </a>  
-                                        @endif
+                                        </a>
                                         <button class="dropdown-item btn btn-outline-danger tombolHapus" value="{{ $data->id }}">
                                             <i class="la la-trash">
                                                 <label for="">Hapus</label>

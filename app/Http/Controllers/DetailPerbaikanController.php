@@ -41,7 +41,8 @@ class DetailPerbaikanController extends Controller
      */
     public function store(Request $request)
     {
-        $barang = Asset::find($request['id_asset']);
+        $perbaikan = Perbaikan::find($request['id_perbaikan']);
+        $barang = DetailPerbaikan::where('id_asset', $request['id_asset'])->first();
         if ($barang != null) {
             return redirect('/perbaikan/'. $perbaikan->id)->with('ERR', 'Tidak dapat menambahkan barang yang sama.');
         }
@@ -52,7 +53,6 @@ class DetailPerbaikanController extends Controller
             'harga_estimasi' => $request['harga_estimasi'],
         ]);
 
-        $perbaikan = Perbaikan::find($request['id_perbaikan']);
         $perbaikan->update([
             'total_harga_estimasi' => $perbaikan->total_harga_estimasi + $request['harga_estimasi']
         ]);
@@ -102,7 +102,6 @@ class DetailPerbaikanController extends Controller
 
         $detailPerbaikan->update([
             'id_perbaikan' => $request['id_perbaikan'],
-            'id_asset' => $request['id_asset'],
             'harga_estimasi' => $request['harga_estimasi'],
         ]);
 

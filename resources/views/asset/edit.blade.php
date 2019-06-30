@@ -20,6 +20,11 @@
         </div>
     </div>
 </div>
+<div class="content-header-right col-md-6 col-12">
+    <div class="btn-group float-md-right">
+        <a href="/asset/index" class="btn btn-info">Kembali</a>
+    </div>
+</div>
 @endsection
 
 @section('content')
@@ -71,33 +76,40 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label >Kategori</label>
-                                        <select class="form-control" name="kategori" id="kategori">
-                                            <option {{ $asset->kategori == 'Infrastruktur' ? 'selected' : '' }} value="Infrastruktur">Infrastruktur</option>
-                                            <option {{ $asset->kategori == 'Inventaris' ? 'selected' : '' }} value="Inventaris">Inventaris</option>
+                                        <select name="kategori" id="kategori" class="form-control" required>
+                                            <option value="Infrastruktur" {{ $asset->kategori == 'Infrastruktur' ? 'selected' : '' }}>Infrastruktur</option>
+                                            <option value="Inventaris" {{ $asset->kategori == 'Inventaris' ? 'selected' : '' }}>Inventaris</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label >Sub Kategori</label>
-                                        <select class="form-control" name="sub_kategori" id="sub_kategori">
-                                            <option {{ $asset->sub_kategori == 'Tanah' ? 'selected' : '' }} value="Tanah">Tanah</option>
-                                            <option {{ $asset->sub_kategori == 'Gedung' ? 'selected' : '' }} value="Gedung">Gedung</option>
-                                            <option {{ $asset->sub_kategori == 'Kendaraan' ? 'selected' : '' }} value="Kendaraan">Kendaraan</option>
-                                            <option {{ $asset->sub_kategori == 'Alat Kantor' ? 'selected' : '' }} value="Alat Kantor">Alat Kantor</option>
-                                            <option {{ $asset->sub_kategori == 'Fasilitas Perkuliahan' ? 'selected' : '' }} value="Fasilitas Perkuliahan">Fasilitas Perkuliahan</option>
-                                            <option {{ $asset->sub_kategori == 'Other' ? 'selected' : '' }} value="Other">Other</option>
+                                        <select name="sub_kategori" id="sub_kategori" class="form-control" required>
+                                            <option value="Tanah" class="opsi-infrastruktur" {{ $asset->sub_kategori == 'Tanah' ? 'selected' : '' }}>Tanah</option>
+                                            <option value="Gedung" class="opsi-infrastruktur" {{ $asset->sub_kategori == 'Gedung' ? 'selected' : '' }}>Gedung</option>
+                                            <option value="Kendaraan" class="opsi-infrastruktur" {{ $asset->sub_kategori == 'Kendaraan' ? 'selected' : '' }}>Kendaraan</option>
+                                            <option value="Alat Kantor" class="opsi-inventaris" {{ $asset->sub_kategori == 'Alat Kantor' ? 'selected' : '' }}>Alat Kantor</option>
+                                            <option value="Fasilitas Perkuliahan" class="opsi-inventaris" {{ $asset->sub_kategori == 'Fasilitas Perkuliahan' ? 'selected' : '' }}>Fasilitas Perkuliahan</option>
+                                            <option value="Other" {{ $asset->sub_kategori == 'Other' ? 'selected' : '' }}>Other</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" id="sub_kategori_other">
+                                    <div class="form-group">
+                                        <label >Sub Kategori (Other)</label>
+                                        <input type="text" name="sub_kategori_other" class="form-control" placeholder="Silahkan isi kolom ini.." value="{{ $asset->sub_kategori }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12" id="jenis">
                                     <div class="form-group">
                                         <label >Jenis</label>
-                                        <select class="form-control" name="jenis" id="jenis">
-                                            <option {{ $asset->jenis == 'Roda 2' ? 'selected' : '' }} value="Roda 2">Roda 2</option>
-                                            <option {{ $asset->jenis == 'Roda 4' ? 'selected' : '' }} value="Roda 4">Roda 4</option>
-                                            <option {{ $asset->jenis == 'Meubelair' ? 'selected' : '' }} value="Meubelair">Meubelair</option>
-                                            <option {{ $asset->jenis == 'Elektronik' ? 'selected' : '' }} value="Elektronik">Elektronik</option>
+                                        <select name="jenis" class="form-control" required>
+                                            <option value="-" class="hide">-</option>
+                                            <option value="Roda 2" class="opsi-kendaraan" {{ $asset->jenis == 'Roda 2' ? 'selected' : '' }}>Roda 2</option>
+                                            <option value="Roda 4" class="opsi-kendaraan" {{ $asset->jenis == 'Roda 4' ? 'selected' : '' }}>Roda 4</option>
+                                            <option value="Meubelair" class="opsi-selain-kendaraan" {{ $asset->jenis == 'Meubelair' ? 'selected' : '' }}>Meubelair</option>
+                                            <option value="Elektronik" class="opsi-selain-kendaraan" {{ $asset->jenis == 'Elektronik' ? 'selected' : '' }}>Elektronik</option>
                                         </select>
                                     </div>
                                 </div>
@@ -169,4 +181,55 @@
 
 @section('script')
 
+@if ($asset->sub_kategori != 'Other')
+    <script>
+        $("#sub_kategori_other").hide();
+        $("#jenis").hide();
+    </script>
+@endif
+
+<script>
+    $(document).ready(function(){
+        $("#sub_kategori").on("change", function(){
+            value = $(this).val();
+            console.log(value);
+            if (value == "Kendaraan") {
+                $(".opsi-selain-kendaraan").hide();
+                $(".opsi-kendaraan").show();
+                $("#jenis option[value='Roda 2']").attr("selected", true);
+            }
+            if(value == "Tanah" || value == "Gedung"){
+                $("#jenis").hide();
+            }else{
+                $("#jenis").show();
+            }
+            if (value == "Other") {
+                $("#sub_kategori_other").show();
+                $("#jenis").hide();
+            }else{
+                $("#sub_kategori_other").hide();
+            };
+        });
+        $(".opsi-inventaris").hide();
+        $("#kategori").on("change", function(){
+            value = $(this).val();
+            console.log(value);
+            if (value == "Infrastruktur") {
+                $(".opsi-inventaris").hide();
+                $(".opsi-selain-kendaraan").hide();
+                $(".opsi-infrastruktur").show();
+                $(".opsi-kendaraan").show();
+                $("#sub_kategori option[value='Tanah']").attr("selected", true);
+                $("#jenis option[value='Roda 2']").attr("selected", true);
+            }else if(value == "Inventaris"){
+                $(".opsi-kendaraan").hide();
+                $(".opsi-infrastruktur").hide();
+                $(".opsi-inventaris").show();
+                $(".opsi-selain-kendaraan").show();
+                $("#sub_kategori option[value='Alat Kantor']").attr("selected", true);
+                $("#jenis option[value='Meubelair']").attr("selected", true);
+            }
+        });
+    });
+</script>
 @endsection

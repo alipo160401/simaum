@@ -15,16 +15,12 @@ class CreatePemindahansTable extends Migration
     {
         Schema::create('pemindahans', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_asset')->unsigned()->nullable();
-            $table->integer('id_ruang')->unsigned()->nullable();
-            $table->string('nama_surat')->nullable();
-            $table->string('no_surat')->nullable();
-            $table->string('jenis_surat')->nullable();
-            $table->string('status')->nullable();
-            $table->string('pic_pekerja')->nullable();
+            $table->integer('id_ruang')->unsigned();
+            $table->string('no_pengajuan');
+            $table->string('tanggal_beli')->nullable();
+            $table->string('status');
             $table->timestamps();
             
-            $table->foreign('id_asset')->references('id')->on('assets')->onDelete('cascade');
             $table->foreign('id_ruang')->references('id')->on('ruangs')->onDelete('cascade');
         });
     }

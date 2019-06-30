@@ -42,7 +42,7 @@ class DetailPemeliharaanController extends Controller
     public function store(Request $request)
     {
         $pemeliharaanRutin = PemeliharaanRutin::find($request['id_pemeliharaan_rutin']);
-        $barang = Asset::find($request['id_asset']);
+        $barang = DetailPemeliharaan::where('id_asset', $request['id_asset'])->first();
 
         if ($barang != null) {
             return redirect('/pemeliharaanRutin/'. $pemeliharaanRutin->id)->with('ERR', 'Tidak dapat menambahkan barang yang sama.');
@@ -103,7 +103,6 @@ class DetailPemeliharaanController extends Controller
 
         $detailPemeliharaan->update([
             'id_pemeliharaan_rutin' => $request['id_pemeliharaan_rutin'],
-            'id_asset' => $request['id_asset'],
             'harga_estimasi' => $request['harga_estimasi'],
         ]);
 

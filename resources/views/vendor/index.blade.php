@@ -75,6 +75,13 @@
                                         <i class="la la-gear"></i>
                                     </button>
                                     <div class="dropdown-menu" x-placement="button-start">
+                                        <a href="/vendor/detail/{{ $data->id }}">
+                                            <button class="dropdown-item btn btn-outline-info">
+                                                <i class="la la-search">
+                                                    <label for="">Detail</label>
+                                                </i>
+                                            </button>
+                                        </a>
                                         <a href="/vendor/edit/{{ $data->id }}">
                                             <button class="dropdown-item btn btn-outline-info">
                                                 <i class="la la-edit">
@@ -97,6 +104,13 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <a href="/vendor/exportExcel" target="_blank">
+            <button class="btn btn-success block" ><i class="la la-file-excel-o"></i>Export Excel</button>
+        </a>
     </div>
 </div>
 

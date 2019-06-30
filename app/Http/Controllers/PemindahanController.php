@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DetailPemindahan;
 use App\Pemindahan;
 use App\Asset;
 use App\Ruang;
@@ -16,7 +17,7 @@ class PemindahanController extends Controller
      */
     public function index()
     {
-        $data['pemindahan'] = Pemindahan::with('asset','ruang')->get();
+        $data['pemindahan'] = Pemindahan::with('ruang')->get();
         $data['nomor'] = 1;
         
         return view('pemindahan.index', $data);
@@ -29,7 +30,6 @@ class PemindahanController extends Controller
      */
     public function create()
     {
-        $data['asset'] = Asset::with('ruang')->where('status_pemusnahan', '!=', null)->get();
         $data['ruang'] = Ruang::all();
 
         return view('pemindahan.tambah', $data);
@@ -43,16 +43,14 @@ class PemindahanController extends Controller
      */
     public function store(Request $request)
     {
-        Pemindahan::create([
-            'id_asset' => $request['id_asset'],
+        $pemindahan = Pemindahan::create([
             'id_ruang' => $request['id_ruang'],
-            'nama_surat' => $request['nama_surat'],
-            'no_surat' => $request['no_surat'],
-            'jenis_surat' => $request['jenis_surat'],
-            'pic_pekerja' => $request['pic_pekerja'],
-            'status' => 'Belum dikonfirmasi'
+            'no_pengajuan' => $request['no_pengajuan'],
+            'status' => 'Proses pengajuan',
+            'tanggal_beli' => $request['tanggal_beli'],
         ]);
-        return redirect('/pemindahan/index')->with('OK','Berhasil Menambah Surat Pengajuan Pemindahan');
+
+        return redirect('/pemindahan/'.$pemindahan->id)->with('OK', 'Silahkan tambah list barang.');
     }
 
     /**
@@ -61,9 +59,13 @@ class PemindahanController extends Controller
      * @param  \App\Pemindahan  $pemindahan
      * @return \Illuminate\Http\Response
      */
-    public function show(Pemindahan $pemindahan)
+    public function show($id)
     {
-        //
+        $data['pemindahan'] = Pemindahan::with('ruang', 'detail_pemindahan', 'asset')->where('id', $id)->first();
+        $data['ruang'] = Ruang::all();
+        $data['asset'] = Asset::where('status_pemusnahan', 'False')->get();
+
+        return view('pemindahan.show', $data);
     }
 
     /**
@@ -75,8 +77,8 @@ class PemindahanController extends Controller
     public function edit(Request $request)
     {
         $data['pemindahan'] = Pemindahan::find($request['id']);
-        $data['asset'] = Asset::all();
         $data['ruang'] = Ruang::all();
+
         return view('pemindahan.edit', $data);
     }
 
@@ -87,41 +89,48 @@ class PemindahanController extends Controller
      * @param  \App\Pemindahan  $pemindahan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pemindahan $pemindahan)
+    public function update(Request $request, $id)
     {
-        $pemindahan = Pemindahan::find($request['id']);
-        $pemindahan->update([
-            'nama_surat' => $request['nama_surat'],
-            'no_surat' => $request['no_surat'],
-            'jenis_surat' => $request['jenis_surat'],
-            'pic_pekerja' => $request['pic_pekerja'],
-        ]);
-        return redirect()->back()->with('OK', 'Berhasil Mengedit Data');
-    }
+        $pemindahan = Pemindahan::find($id);
 
-    public function editStatus(Request $request)
-    {
-        $data['pemindahan'] = Pemindahan::find($request['id']);
-        $data['ruang'] = Ruang::find($request['id']);
-        return view('pemindahan.editstatus', $data);
-    }
-
-    public function updateStatus(Request $request)
-    {
-        $pemindahan = Pemindahan::find($request['id']);
-        $pemindahan->update([
-            'status' => $request['status'],
-            ]);
-            
-        $asset = Asset::find($request['id_asset']);
-        if ($request['status'] == 'Pengajuan dikonfirmasi') {
-            $asset->update([
-                'id_ruang' => $pemindahan->id_ruang,
-            ]);    
+        if (isset($_GET['status'])) 
+        {
+            if ($_GET['status'] == 'selesai') 
+            {
+                $pemindahan->update([
+                    'status' => 'Belum dikonfirmasi',
+                ]);
+                return redirect()->back()->with('OK', 'Berhasil mengirim pengajuan');
+            }
+            if ($_GET['status'] == 'dikonfirmasi') 
+            {
+                $pemindahan->update([
+                    'status' => 'Pengajuan dikonfirmasi',
+                ]);
+                $detail_pemindahan = DetailPemindahan::where('id_pemindahan', $id)->get();
+                foreach ($detail_pemindahan as $item) {
+                    Asset::find($item->id_asset)->update([
+                        'id_ruang' => $pemindahan->id_ruang,
+                    ]);
+                }
+                return redirect()->back()->with('OK', 'Berhasil mengkonfirmasi pengajuan');
+            }
+            if ($_GET['status'] == 'ditolak') 
+            {
+                $pemindahan->update([
+                    'status' => 'Pengajuan ditolak',
+                ]);
+                return redirect()->back()->with('OK', 'Berhasil menolak pengajuan');
+            }
         }
-            
-            
-        return redirect('/pemindahan/index')->with('OK', 'Status pemindahan telah di-update, Barang telah di pindahkan.');
+
+        $pemindahan->update([
+            'id_ruang' => $request['id_ruang'],
+            'no_pengajuan' => $request['no_pengajuan'],
+            'tanggal_beli' => $request['tanggal_beli'],
+        ]);
+
+        return redirect()->back()->with('OK', 'Berhasil mengubah data');
     }
 
     /**

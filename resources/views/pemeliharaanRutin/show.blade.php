@@ -138,7 +138,12 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp.</span>
                                 </div>
-                                <input type="text" class="form-control" name="harga_estimasi" required>
+                                <input type="text" class="form-control" name="harga_estimasi" required onkeydown="return ( event.ctrlkey || event.altkey
+                                || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                                || (95<event.keyCode && event.keyCode<106)
+                                || (event.keyCode==8) || (event.keyCode==9)
+                                || (event.keyCode>34) && (event.keyCode<40)
+                                || (event.keyCode==46) )"> 
                             </div>                        
                         </div>
                         <div class="form-actions">
@@ -171,14 +176,17 @@
                             <tr>
                                 <th>Nama Barang</th>
                                 <th>Harga Estimasi</th>
+                                @if ($pemeliharaanRutin->status == 'Proses pengajuan')
                                 <th>Aksi</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($pemeliharaanRutin->detail_pemeliharaan as $data)
                                 <tr>
-                                    <td>{{ $data->asset->nama }},Kode: {{ $data->asset->kode }},Kondisi: {{ $data->asset->kondisi }}</td>
+                                    <td>{{ $data->asset->nama }}, Kode: {{ $data->asset->kode }}, Kondisi: {{ $data->asset->kondisi }}</td>
                                     <td>Rp. {{ $data->harga_estimasi }}</td>
+                                    @if ($pemeliharaanRutin->status == 'Proses pengajuan')
                                     <td>
                                         <div class="btn-group text-center">
                                             <button type="button" class="btn btn-info round dropdown-toggle"
@@ -201,6 +209,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
@@ -311,7 +320,7 @@
             $("#confirm").modal();
         });
         $(document).on("click", "#tombolTolak", function(){
-            $("#confirm").modal();
+            $("#reject").modal();
         });
     </script>
 @endsection

@@ -80,8 +80,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Kontak</label>
-                                        <input type="text" id="kontak" class="form-control" placeholder="Kontak lainnya" name="kontak" required>
+                                        <label>Email</label>
+                                        <input type="email" id="kontak" class="form-control" placeholder="example@gmail.com" name="kontak" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">

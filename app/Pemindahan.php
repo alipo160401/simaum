@@ -17,4 +17,8 @@ class Pemindahan extends Model
     {
         return $this->belongsTo('App\Ruang', 'id_ruang');
     }
+    public function detail_pemindahan()
+    {
+        return $this->hasMany('App\DetailPemindahan', 'id_pemindahan');
+    }
 }

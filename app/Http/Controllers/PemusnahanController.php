@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DetailPemusnahan;
 use App\Pemusnahan;
 use App\Asset;
 use Illuminate\Http\Request;
@@ -28,9 +29,7 @@ class PemusnahanController extends Controller
      */
     public function create()
     {
-        $data['asset'] = Asset::where('status_pemusnahan', 'False')->where('kondisi', 'Rusak(tidak bisa diperbaiki)')->get();
-
-        return view('pemusnahan.tambah', $data);
+        return view('pemusnahan.tambah');
     }
 
     /**
@@ -41,15 +40,13 @@ class PemusnahanController extends Controller
      */
     public function store(Request $request)
     {
-        Pemusnahan::create([
-            'id_asset' => $request['id_asset'],
-            'nama_surat' => $request['nama_surat'],
-            'no_surat' => $request['no_surat'],
-            'pic_pekerja' => $request['pic_pekerja'],
-            'status' => 'Belum dikonfirmasi',
+        $pemusnahan = Pemusnahan::create([
+            'no_pengajuan' => $request['no_pengajuan'],
+            'status' => 'Proses pengajuan',
+            'tanggal_beli' => $request['tanggal_beli'],
         ]);
 
-        return redirect('/pemusnahan/index')->with('OK', 'Berhasil Menambah Pengajuan Pemusnahan!');
+        return redirect('/pemusnahan/'.$pemusnahan->id)->with('OK', 'Silahkan tambah list barang.');
     }
 
     /**
@@ -58,9 +55,12 @@ class PemusnahanController extends Controller
      * @param  \App\Pemusnahan  $pemusnahan
      * @return \Illuminate\Http\Response
      */
-    public function show(Pemusnahan $pemusnahan)
+    public function show($id)
     {
-        //
+        $data['pemusnahan'] = Pemusnahan::with('detail_pemusnahan', 'asset')->where('id', $id)->first();
+        $data['asset'] = Asset::where('status_pemusnahan', 'False')->get();
+
+        return view('pemusnahan.show', $data);
     }
 
     /**
@@ -83,44 +83,49 @@ class PemusnahanController extends Controller
      * @param  \App\Pemusnahan  $pemusnahan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pemusnahan $pemusnahan)
+    public function update(Request $request, $id)
     {
-        $pemusnahan = Pemusnahan::Find($request['id']);
-        $pemusnahan->update([
-            'nama_surat' => $request['nama_surat'],
-            'no_surat' => $request['no_surat'],
-            'pic_pekerja' => $request['pic_pekerja'],
-        ]);
+        $pemusnahan = Pemusnahan::find($id);
 
-        return redirect()->back()->with('OK', 'Berhasil Mengubah Data!');
-    }
-
-    public function editStatus(Request $request)
-    {
-        $data['pemusnahan'] = Pemusnahan::find($request['id']);
-        $data['asset'] = Asset::all();
-
-        return view('pemusnahan.editStatus', $data);
-    }
-
-    public function updateStatus(Request $request)
-    {
-        $pemusnahan = Pemusnahan::find($request['id']);
-        $pemusnahan->update([
-            'status' => $request['status'],
-        ]);
-
-        if ($request['status'] == 'Pengajuan dikonfirmasi') {
-            $asset = Asset::find($pemusnahan->id_asset);
-            $asset->update([
-                'status_pemusnahan' => 'Dimusnahkan',
-            ]);
+        if (isset($_GET['status'])) 
+        {
+            if ($_GET['status'] == 'selesai') 
+            {
+                $pemusnahan->update([
+                    'status' => 'Belum dikonfirmasi',
+                ]);
+                return redirect()->back()->with('OK', 'Berhasil mengirim pengajuan');
+            }
+            if ($_GET['status'] == 'dikonfirmasi') 
+            {
+                $pemusnahan->update([
+                    'status' => 'Pengajuan dikonfirmasi',
+                ]);
+                $detail_pemusnahan = DetailPemusnahan::where('id_pemusnahan', $id)->get();
+                foreach ($detail_pemusnahan as $item) {
+                    Asset::find($item->id_asset)->update([
+                        'status_pemusnahan' => 'True',
+                    ]);
+                }
+                return redirect()->back()->with('OK', 'Berhasil mengkonfirmasi pengajuan');
+            }
+            if ($_GET['status'] == 'ditolak') 
+            {
+                $pemusnahan->update([
+                    'status' => 'Pengajuan ditolak',
+                ]);
+                return redirect()->back()->with('OK', 'Berhasil menolak pengajuan');
+            }
         }
 
-        return redirect('/pemusnahan/index')->with('OK', 'Status Pemusnahan telah di-update!');
+        $pemusnahan->update([
+            'no_pengajuan' => $request['no_pengajuan'],
+            'tanggal_beli' => $request['tanggal_beli'],
+        ]);
+
+        return redirect()->back()->with('OK', 'Berhasil mengubah data');
     }
-
-
+    
     /**
      * Remove the specified resource from storage.
      *

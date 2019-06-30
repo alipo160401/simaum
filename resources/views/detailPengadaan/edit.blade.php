@@ -20,6 +20,11 @@
         </div>
     </div>
 </div>
+<div class="content-header-right col-md-6 col-12">
+    <div class="btn-group float-md-right">
+        <a href="/pengadaan/{{ $detailPengadaan->id_pengadaan }}" class="btn btn-info">Kembali</a>
+    </div>
+</div>
 @endsection
 
 @section('content')
@@ -51,7 +56,12 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp.</span>
                                 </div>
-                                <input type="text" class="form-control" name="harga_estimasi" value="{{ $detailPengadaan->harga_estimasi }}" required>
+                                <input type="text" class="form-control" name="harga_estimasi" value="{{ $detailPengadaan->harga_estimasi }}" required onkeydown="return ( event.ctrlkey || event.altkey
+                                || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                                || (95<event.keyCode && event.keyCode<106)
+                                || (event.keyCode==8) || (event.keyCode==9)
+                                || (event.keyCode>34) && (event.keyCode<40)
+                                || (event.keyCode==46) )">
                             </div>                        
                         </div>
                         <div class="form-actions">

@@ -73,6 +73,13 @@
                                         <i class="la la-gear"></i>
                                     </button>
                                     <div class="dropdown-menu" x-placement="button-start">
+                                        <a href="/user/detail/{{ $data->id }}">
+                                            <button class="dropdown-item btn btn-outline-info">
+                                                <i class="la la-search">
+                                                    <label for="">Detail</label>
+                                                </i>
+                                            </button>
+                                        </a>
                                         <a href="/user/edit/{{ $data->id }}">
                                             <button class="dropdown-item btn btn-outline-info">
                                                 <i class="la la-edit">

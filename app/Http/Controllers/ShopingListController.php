@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\ShopingList;
 use Illuminate\Http\Request;
+use App\Exports\ShopingListExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 
 class ShopingListController extends Controller
 {
@@ -19,6 +22,12 @@ class ShopingListController extends Controller
 
         return view('shopingList.index', $data);
     }
+ 
+	public function exportExcel()
+	{
+		return Excel::download(new ShopingListExport, 'shopingList.xlsx');
+	}
+
 
     /**
      * Show the form for creating a new resource.
@@ -66,6 +75,13 @@ class ShopingListController extends Controller
      * @param  \App\ShopingList  $shopingList
      * @return \Illuminate\Http\Response
      */
+    public function detail(Request $request)
+    {
+        $data['shopingList'] = ShopingList::find($request['id']);
+
+        return view('shopingList.detail', $data);
+    }
+
     public function edit(Request $request)
     {
         $data['shopingList'] = ShopingList::find($request['id']);

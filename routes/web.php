@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('destroy/{id}', 'UserController@destroy');
         Route::get('editPassword/{id}', 'UserController@editPassword');
         Route::post('changePassword/{id}', 'UserController@changePassword');
+        Route::get('detail/{id}', 'UserController@detail');
+        Route::get('exportExcel', 'UserController@exportExcel');
         
     });
     
@@ -44,6 +46,8 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('edit/{id}', 'VendorController@edit');
             Route::post('update/{id}', 'VendorController@update');
             Route::post('destroy/{id}', 'VendorController@destroy');
+            Route::get('detail/{id}', 'VendorController@detail');
+            Route::get('exportExcel', 'VendorController@exportExcel');
             
         });
 
@@ -55,6 +59,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('edit/{id}', 'TanahController@edit');
         Route::post('update/{id}', 'TanahController@update');
         Route::post('destroy/{id}', 'TanahController@destroy');
+        Route::get('detail/{id}', 'TanahController@detail');
+        Route::get('exportExcel', 'TanahController@exportExcel');
         
     });
 
@@ -66,6 +72,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('edit/{id}', 'GedungController@edit');
         Route::post('update/{id}', 'GedungController@update');
         Route::post('destroy/{id}', 'GedungController@destroy');
+        Route::get('detail/{id}', 'GedungController@detail');
+        Route::get('exportExcel', 'GedungController@exportExcel');
         
     });
 
@@ -77,6 +85,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('edit/{id}', 'RuangController@edit');
         Route::post('update/{id}', 'RuangController@update');
         Route::post('destroy/{id}', 'RuangController@destroy');
+        Route::get('detail/{id}', 'RuangController@detail');
+        Route::get('exportExcel', 'RuangController@exportExcel');
         
     });
 
@@ -88,6 +98,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('edit/{id}', 'AssetController@edit');
         Route::post('update/{id}', 'AssetController@update');
         Route::post('destroy/{id}', 'AssetController@destroy');
+        Route::get('detail/{id}', 'AssetController@detail');
+        Route::get('exportExcel', 'AssetController@exportExcel');
         
     });
 
@@ -99,6 +111,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('edit/{id}', 'ShopingListController@edit');
         Route::post('update/{id}', 'ShopingListController@update');
         Route::post('destroy/{id}', 'ShopingListController@destroy');
+        Route::get('detail/{id}', 'ShopingListController@detail');
+        Route::get('exportExcel', 'ShopingListController@exportExcel');
         
     });
 
@@ -163,18 +177,6 @@ Route::group(['middleware' => 'auth'], function(){
 
     });
 
-
-    Route::group(['prefix' => '/perbaikan'], function(){
-        
-        Route::get('index', 'PerbaikanController@index');
-        Route::get('create', 'PerbaikanController@create');
-        Route::post('store', 'PerbaikanController@store');
-        Route::get('edit/{id}', 'PerbaikanController@edit');
-        Route::post('update/{id}', 'PerbaikanController@update');
-        Route::post('destroy/{id}', 'PerbaikanController@destroy');
-        
-    });
-
     Route::group(['prefix' => '/pemindahan'], function(){
         
         Route::get('index', 'PemindahanController@index');
@@ -183,9 +185,17 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('edit/{id}', 'PemindahanController@edit');
         Route::post('update/{id}', 'PemindahanController@update');
         Route::post('destroy/{id}', 'PemindahanController@destroy');
-        Route::get('editStatus/{id}', 'PemindahanController@editStatus');
-        Route::post('updateStatus/{id}', 'PemindahanController@updateStatus');
+        Route::get('{id}', 'PemindahanController@show');    
         
+    });
+
+    Route::group(['prefix' => '/detailPemindahan'], function(){
+
+        Route::post('store', 'DetailPemindahanController@store');   
+        Route::get('edit/{id}', 'DetailPemindahanController@edit');
+        Route::post('update/{id}', 'DetailPemindahanController@update');
+        Route::post('destroy/{id}', 'DetailPemindahanController@destroy');
+
     });
 
     Route::group(['prefix' => '/pemusnahan'], function(){
@@ -196,9 +206,17 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('edit/{id}', 'PemusnahanController@edit');
         Route::post('update/{id}', 'PemusnahanController@update');
         Route::post('destroy/{id}', 'PemusnahanController@destroy');
-        Route::get('editStatus/{id}', 'PemusnahanController@editStatus');
-        Route::post('updateStatus/{id}', 'PemusnahanController@updateStatus');
+        Route::get('{id}', 'PemusnahanController@show');    
         
+    });
+
+    Route::group(['prefix' => '/detailPemusnahan'], function(){
+
+        Route::post('store', 'DetailPemusnahanController@store');   
+        Route::get('edit/{id}', 'DetailPemusnahanController@edit');
+        Route::post('update/{id}', 'DetailPemusnahanController@update');
+        Route::post('destroy/{id}', 'DetailPemusnahanController@destroy');
+
     });
 
 

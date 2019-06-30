@@ -10,9 +10,9 @@ class DetailPerbaikan extends Model
         'id',
     ];
 
-    public function Perbaikan()
+    public function perbaikan()
     {
-        return $this->belongsTo('App\PemeliharaanRutin', 'id_perbaikan');
+        return $this->belongsTo('App\Perbaikan', 'id_perbaikan');
     }
 
     public function asset()

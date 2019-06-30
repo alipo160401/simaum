@@ -20,6 +20,11 @@
         </div>
     </div>
 </div>
+<div class="content-header-right col-md-6 col-12">
+    <div class="btn-group float-md-right">
+        <a href="/perbaikan/{{ $detailPerbaikan->id_perbaikan }}" class="btn btn-info">Kembali</a>
+    </div>
+</div>
 @endsection
 
 @section('content')
@@ -43,7 +48,7 @@
                         <input type="hidden" name="id_perbaikan" value="{{ $detailPerbaikan->id_perbaikan }}">
                         <div class="form-group">
                             <label>Nama Barang</label>
-                            <input type="text" name="nama_barang" class="form-control" value="{{ $detailPerbaikan->asset->nama }},Kode: {{ $detailPerbaikan->asset->kode }},Kondisi: {{ $detailPerbaikan->asset->kondisi }}" readonly>
+                            <input type="text" name="id_asset" class="form-control" value="{{ $detailPerbaikan->asset->nama }},Kode: {{ $detailPerbaikan->asset->kode }},Kondisi: {{ $detailPerbaikan->asset->kondisi }}" readonly>
                         </div>
                         <div class="form-group">
                             <label>Harga Estimasi</label>
@@ -51,7 +56,12 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp.</span>
                                 </div>
-                                <input type="text" class="form-control" name="harga_estimasi" value="{{ $detailPerbaikan->harga_estimasi }}" required>
+                                <input type="text" class="form-control" name="harga_estimasi" value="{{ $detailPerbaikan->harga_estimasi }}" required onkeydown="return ( event.ctrlkey || event.altkey
+                                || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                                || (95<event.keyCode && event.keyCode<106)
+                                || (event.keyCode==8) || (event.keyCode==9)
+                                || (event.keyCode>34) && (event.keyCode<40)
+                                || (event.keyCode==46) )">
                             </div>                        
                         </div>
                         <div class="form-actions">

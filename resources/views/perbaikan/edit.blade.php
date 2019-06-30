@@ -20,6 +20,11 @@
         </div>
     </div>
 </div>
+<div class="content-header-right col-md-6 col-12">
+    <div class="btn-group float-md-right">
+        <a href="/perbaikan/index" class="btn btn-info">Kembali</a>
+    </div>
+</div>
 @endsection
 
 @section('content')
@@ -65,13 +70,28 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label >Total Harga Estimasi</label>
-                                        <input type="text" class="form-control" placeholder="Total Harga Estimasi" name="total_harga_estimasi" value="{{ $perbaikan->total_harga_estimasi }}">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                        <input type="text" class="form-control" placeholder="Total Harga Estimasi" name="total_harga_estimasi" value="{{ $perbaikan->total_harga_estimasi }}" readonly>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label >Total Harga Real</label>
-                                        <input type="text" class="form-control" placeholder="Total Harga Real" name="total_harga_real" value="{{ $perbaikan->total_harga_real }}">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                        <input type="text" class="form-control" placeholder="Total Harga Real" name="total_harga_real" value="{{ $perbaikan->total_harga_real }}" onkeydown="return ( event.ctrlkey || event.altkey
+                                        || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                                        || (95<event.keyCode && event.keyCode<106)
+                                        || (event.keyCode==8) || (event.keyCode==9)
+                                        || (event.keyCode>34) && (event.keyCode<40)
+                                        || (event.keyCode==46) )">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">

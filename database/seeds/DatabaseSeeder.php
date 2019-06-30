@@ -4,17 +4,11 @@ use Illuminate\Database\Seeder;
 use App\User;
 use App\Pengadaan;
 use App\Gedung;
-use App\Fakultas;
-use App\Ruangan;
-use App\Inventaris;
-use App\Peminjaman;
+use App\Ruang;
 use App\Pemindahan;
 use App\Pemusnahan;
-use App\Infus;
-use App\TroubleTicket;
-use App\Maintenance;
-use App\Kendaraan;
 use App\ShopingList;
+use App\Vendor;
 
 class DatabaseSeeder extends Seeder
 {
@@ -33,6 +27,22 @@ class DatabaseSeeder extends Seeder
             'role' => 'Kabiro sarana & prasarana(P3)',
             'username' => 'dicky',
             'password' => bcrypt('1')
+        ]);
+        
+        Vendor::create([
+            'nama' => 'Toko Komputer',
+            'alamat' => 'Jl. Pupuk Baru',
+            'bidang_pekerjaan' => 'Elektronik',
+            'no_hp' => '8115919454',
+            'kontak' => 'tokokomputer@gmail.com',
+            'pic_vendor' => 'Alif',
+            'npwp' => '123128',
+        ]);
+
+        Ruang::create([
+            'nama' => 'Kantor 1',
+            'kode' => 'K-01',
+            'jenis' => 'Kantor',
         ]);
 
         // $this->call(UsersTableSeeder::class);

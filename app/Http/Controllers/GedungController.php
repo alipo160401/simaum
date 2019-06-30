@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Gedung;
 use Illuminate\Http\Request;
+use App\Exports\GedungExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 
 class GedungController extends Controller
 {
@@ -19,6 +22,12 @@ class GedungController extends Controller
 
         return view('gedung.index', $data);
     }
+ 
+	public function exportExcel()
+	{
+		return Excel::download(new GedungExport, 'gedung.xlsx');
+	}
+
 
     /**
      * Show the form for creating a new resource.
@@ -64,6 +73,13 @@ class GedungController extends Controller
      * @param  \App\Gedung  $gedung
      * @return \Illuminate\Http\Response
      */
+    public function detail(Request $request)
+    {
+        $data['gedung'] = Gedung::find($request['id']);
+
+        return view('gedung.detail', $data);
+    }
+
     public function edit(Request $request)
     {
         $data['gedung'] = Gedung::find($request['id']);

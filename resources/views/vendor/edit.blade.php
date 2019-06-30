@@ -20,6 +20,11 @@
         </div>
     </div>
 </div>
+<div class="content-header-right col-md-6 col-12">
+    <div class="btn-group float-md-right">
+        <a href="/vendor/index" class="btn btn-info">Kembali</a>
+    </div>
+</div>
 @endsection
 
 @section('content')
@@ -81,8 +86,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Kontak</label>
-                                        <input type="text" id="kontak" class="form-control" placeholder="Kontak lainnya" name="kontak" value="{{ $vendor->kontak }}">
+                                        <label>Email</label>
+                                        <input type="email" id="kontak" class="form-control" placeholder="example@gmail.com" name="kontak" value="{{ $vendor->kontak }}">
                                     </div>
                                 </div>
                                 <div class="col-md-12">

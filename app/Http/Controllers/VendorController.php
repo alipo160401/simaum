@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Vendor;
 use Illuminate\Http\Request;
+use App\Exports\VendorExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 
 class VendorController extends Controller
 {
@@ -19,6 +22,11 @@ class VendorController extends Controller
 
         return view('vendor.index', $data);
     }
+ 
+	public function exportExcel()
+	{
+		return Excel::download(new VendorExport, 'vendor.xlsx');
+	}
 
     /**
      * Show the form for creating a new resource.
@@ -68,6 +76,12 @@ class VendorController extends Controller
      * @param  \App\Vendor  $vendor
      * @return \Illuminate\Http\Response
      */
+    public function detail(Request $request)
+    {
+        $data['vendor'] = Vendor::find($request['id']);
+        return view('vendor.detail', $data);
+    }
+
     public function edit(Request $request)
     {
         $data['vendor'] = Vendor::find($request['id']);

@@ -67,7 +67,8 @@
                             @if ($data->status_pemusnahan != 'Dimusnahkan')
                             <tr>
                                 <td>{{ $nomor++ }}</td>
-                                <td>{{ $data->ruang->nama }}, Kode Ruang: {{ $data->ruang->kode }}, Jenis Ruang: {{ $data->ruang->jenis }}</td>
+                                <td>{{ $data->ruang->nama }}, Kode Ruang: {{ $data->ruang->kode }}, Jenis Ruang:
+                                    {{ $data->ruang->jenis }}</td>
                                 <td>{{ $data->nama }}</td>
                                 <td>{{ $data->kode }}</td>
                                 <td>{{ $data->kategori }}, Sub Kategori: {{ $data->sub_kategori }}</td>
@@ -82,70 +83,85 @@
                                 <td>
                                     <div class="btn-group text-center">
                                         <button type="button" class="btn btn-info round dropdown-toggle"
-                                        data-toggle="dropdown">
-                                        <i class="la la-gear"></i>
-                                    </button>
-                                    <div class="dropdown-menu" x-placement="button-start">
-                                        <a href="/asset/edit/{{ $data->id }}">
-                                            <button class="dropdown-item btn btn-outline-info">
-                                                <i class="la la-edit">
-                                                    <label for="">Edit</label>
-                                                </i>
-                                            </button>
-                                        </a>
-                                        <button class="dropdown-item btn btn-outline-danger tombolHapus" value="{{ $data->id }}">
+                                            data-toggle="dropdown">
+                                            <i class="la la-gear"></i>
+                                        </button>
+                                        <div class="dropdown-menu" x-placement="button-start">
+                                            <a href="/asset/detail/{{ $data->id }}">
+                                                <button class="dropdown-item btn btn-outline-info">
+                                                    <i class="la la-search">
+                                                        <label for="">Detail</label>
+                                                    </i>
+                                                </button>
+                                            </a>
+                                            <a href="/asset/edit/{{ $data->id }}">
+                                                <button class="dropdown-item btn btn-outline-info">
+                                                    <i class="la la-edit">
+                                                        <label for="">Edit</label>
+                                                    </i>
+                                                </button>
+                                            </a>
+                                            <button class="dropdown-item btn btn-outline-danger tombolHapus"
+                                                value="{{ $data->id }}">
                                                 <i class="la la-trash">
                                                     <label for="">Hapus</label>
                                                 </i>
                                             </button>
                                         </div>
-                                </div>
-                            </td>
-                        </tr>
-                        @endif
-                        @endforeach
-                    </tbody>
-                </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-2">
+        <a href="/asset/exportExcel" target="_blank">
+            <button class="btn btn-success block" ><i class="la la-file-excel-o"></i>Export Excel</button>
+        </a>
+    </div>
 </div>
 
 {{-- modal delete --}}
 <div class="modal fade" id="delete">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <form id="deleteForm" method="POST">
-    
-                    @csrf
-                    <!-- Modal Header -->
-                    <div class="modal-header bg-info">
-                        <h4 class="modal-title text-white">Apakah anda yakin ingin menghapus Asset ini ?</h4>
-                        <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                    </div>
-    
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="submit" name="id" id="deleteId" class="btn btn-success round"> Yakin
-                        </button>
-                        <button type="button" class="btn btn-danger round" data-dismiss="modal"> Batal
-                        </button>
-                    </div>
-    
-                </form>
-            </div>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form id="deleteForm" method="POST">
+
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header bg-info">
+                    <h4 class="modal-title text-white">Apakah anda yakin ingin menghapus Asset ini ?</h4>
+                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" name="id" id="deleteId" class="btn btn-success round"> Yakin
+                    </button>
+                    <button type="button" class="btn btn-danger round" data-dismiss="modal"> Batal
+                    </button>
+                </div>
+
+            </form>
         </div>
+    </div>
 </div>
 @endsection
 
 @section('script')
 <script>
-$(document).on("click", ".tombolHapus", function(){
+    $(document).on("click", ".tombolHapus", function () {
         var id = $(this).val();
-    $("#deleteForm").attr("action", "/asset/destroy/"+ id);
-    $("#deleteId").val(id);
-    $("#delete").modal();
-});
+        $("#deleteForm").attr("action", "/asset/destroy/" + id);
+        $("#deleteId").val(id);
+        $("#delete").modal();
+    });
 </script>
 @endsection

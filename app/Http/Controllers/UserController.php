@@ -44,6 +44,12 @@ class UserController extends Controller
         return redirect('/user/index')->with('OK', 'Berhasil menambah User!');
     }
 
+    public function detail(Request $request)
+    {
+        $data['user'] = User::find($request['id']);
+        return view('user.detail', $data);
+    }
+
     public function edit(Request $request)
     {
         $data['user'] = User::find($request['id']);

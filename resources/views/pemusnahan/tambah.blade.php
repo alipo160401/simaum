@@ -45,35 +45,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label >Nama Barang</label>
-                                        <select name="id_asset" id="id_asset" class="form-control">
-                                            
-                                            @foreach ($asset as $item)
-                                                {{-- @if ( $item->kondisi == 'Rusak(tidak bisa diperbaiki)' ) --}}
-                                            
-                                                <option value="{{ $item->id }}">{{ $item->nama }},Kode :{{ $item->kode }},Kondisi :{{ $item->kondisi }}</option>
-                                            
-                                                {{-- @endif --}}
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >Nama Pemusnahan</label>
-                                        <input type="text" class="form-control" placeholder="Nama Pemusnahan" name="nama_surat" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >Nomor Pemusnahan</label>
-                                        <input type="text" class="form-control" placeholder="Nomor Pemusnahan" name="no_surat" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >PIC Pekerja</label>
-                                        <input type="text" class="form-control" placeholder="PIC Pekerja" name="pic_pekerja" required>
+                                        <label >Nomor Pengajuan</label>
+                                        <input type="text"  class="form-control" placeholder="Nomor Pengajuan" name="no_pengajuan" required>
                                     </div>
                                 </div>
                             </div>

@@ -45,50 +45,20 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label >Nama Barang</label>
-                                        <select name="id_asset" id="id_asset" class="form-control">
-                                            @foreach ($asset as $item)
-                                            
-                                                <option value="{{ $item->id }}">{{ $item->nama }},Kode :{{ $item->kode }},Ruang: {{ $item->ruang->nama }}</option>
-
-                                            @endforeach
-                                        </select>
+                                        <label >Nomor Pengajuan</label>
+                                        <input type="text"  class="form-control" placeholder="Nomor Pengajuan" name="no_pengajuan" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label >Pemindahan Ruang</label>
+                                        <label >Ruang (Tujuan pemindahan)</label>
                                         <select name="id_ruang" id="id_ruang" class="form-control">
                                             @foreach ($ruang as $item)
                                             
-                                                <option value="{{ $item->id }}">{{ $item->nama }},Kode :{{ $item->kode }},Jenis :{{ $item->jenis }}</option>
+                                                <option value="{{ $item->id }}">{{ $item->nama }}, Kode Ruang: {{ $item->kode }}, Jenis Ruang: {{ $item->jenis }}</option>
 
                                             @endforeach
                                         </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >Nama Pemindahan</label>
-                                        <input type="text" class="form-control" placeholder="Nama Pemindahan" name="nama_surat" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >Nomor Pemindahan</label>
-                                        <input type="text" class="form-control" placeholder="Nomor Pemindahan" name="no_surat" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >Jenis Pemindahan</label>
-                                        <input type="text" class="form-control" placeholder="Jenis Pemindahan" name="jenis_surat" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >PIC Pekerja</label>
-                                        <input type="text" class="form-control" placeholder="PIC Pekerja" name="pic_pekerja" required>
                                     </div>
                                 </div>
                             </div>

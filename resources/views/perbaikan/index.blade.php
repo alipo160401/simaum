@@ -67,7 +67,7 @@
                                 <td>{{ $data->total_harga_estimasi }}</td>
                                 <td>{{ $data->total_harga_real }}</td>
                                 <td>{{ $data->invoice }}</td>
-                                <td>{{ $data->berita_acara }}</td>
+                                <td><a href="{{ $data->berita_acara }}" class="btn btn-info">Lihat</a></td>
                                 <td>{{ $data->tanggal_beli }}</td>
                                 <td>
                                     @if($data->status == 'Belum dikonfirmasi')
@@ -76,6 +76,8 @@
                                         <p class="bg-success text-white p-1 text-center status-box">{{ $data->status }}</span>
                                     @elseif ($data->status == 'Pengajuan ditolak')
                                         <p class="bg-danger text-white p-1 text-center status-box">{{ $data->status }}</span>
+                                    @elseif ($data->status == 'Proses pengajuan')
+                                        <p class="bg-warning text-white p-1 text-center status-box">{{ $data->status }}</span>
                                     @endif
                                 <td>
                                 <div class="btn-group text-center">
@@ -84,27 +86,29 @@
                                         <i class="la la-gear"></i>
                                     </button>
                                     <div class="dropdown-menu" x-placement="button-start">
-                                        <a href="/perbaikan/{{ $data->id }}">
-                                            <button class="dropdown-item btn btn-outline-info">
-                                                <i class="la la-search">
-                                                    <label for="">Detail</label>
-                                                </i>
-                                            </button>
-                                        </a>
-                                        <a href="/perbaikan/edit/{{ $data->id }}">
-                                            <button class="dropdown-item btn btn-outline-info">
-                                                <i class="la la-edit">
-                                                    <label for="">Edit</label>
-                                                </i>
-                                            </button>
-                                        </a>
-                                        <button class="dropdown-item btn btn-outline-danger tombolHapus" value="{{ $data->id }}">
-                                            <i class="la la-trash">
-                                                <label for="">Hapus</label>
+                                    @if ($data->status != "Pengajuan ditolak")
+                                    <a href="/perbaikan/edit/{{ $data->id }}">
+                                        <button class="dropdown-item btn btn-outline-info">
+                                            <i class="la la-edit">
+                                                <label for="">Edit</label>
                                             </i>
                                         </button>
+                                    </a>
+                                    @endif
+                                    <a href="/perbaikan/{{ $data->id }}">
+                                        <button class="dropdown-item btn btn-outline-info">
+                                            <i class="la la-search">
+                                                <label for="">Detail</label>
+                                            </i>
+                                        </button>
+                                    </a>
+                                        <button class="dropdown-item btn btn-outline-danger tombolHapus" value="{{ $data->id }}">
+                                                <i class="la la-trash">
+                                                    <label for="">Hapus</label>
+                                                </i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
                                 </td>
                             </tr>
                             @endforeach

@@ -20,6 +20,11 @@
         </div>
     </div>
 </div>
+<div class="content-header-right col-md-6 col-12">
+    <div class="btn-group float-md-right">
+        <a href="/pemindahan/index" class="btn btn-info">Kembali</a>
+    </div>
+</div>
 @endsection
 
 @section('content')
@@ -38,53 +43,33 @@
             </div>
             <div class="card-content collpase show">
                 <div class="card-body">
-                    <form action="/pemindahan/update/{id}" class="form" method="POST">
+                    <form action="/pemindahan/update/{{ $pemindahan->id }}" class="form" method="POST">
                         @csrf
-                        <input type="hidden" id="id" name="id" value="{{ $pemindahan->id }}">
                         <div class="form-body">
                             <h4 class="form-section">Edit Pemindahan</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Nama Barang</label>
-                                        <input type="text" class="form-control" name="id_asset"
-                                            value="{{ $pemindahan->asset->nama }},Kode: {{ $pemindahan->asset->kode }},Ruang: {{ $pemindahan->asset->ruang->nama }}"
-                                            readonly>
+                                        <label >Lokasi Ruang</label>
+                                        <select name="id_ruang" id="id_ruang" class="form-control">
+                                            @foreach ($ruang as $item)
+                                            
+                                                <option value="{{ $item->id }}" {{ $pemindahan->id_ruang == $item->id ? 'selected' : '' }}>{{ $item->nama }}, Kode Ruang: {{ $item->kode }}, Jenis Ruang: {{ $item->jenis }}</option>
+
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Ruang Pemindahan</label>
-                                        <input type="text" class="form-control" name="id_ruang"
-                                            value="{{ $pemindahan->ruang->nama }}" readonly>
+                                        <label >Nomor Pengajuan</label>
+                                        <input type="text"  class="form-control" placeholder="Nomor Pengajuan" name="no_pengajuan" value="{{ $pemindahan->no_pengajuan }}">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Nama Pemindahan</label>
-                                        <input type="text" class="form-control" placeholder="Nama Pemindahan" name="nama_surat"
-                                            value="{{ $pemindahan->nama_surat }}" >
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Nomor Pemindahan</label>
-                                        <input type="text" class="form-control" placeholder="Nomor Pemindahan" name="no_surat"
-                                            value="{{ $pemindahan->no_surat }}" >
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Jenis Pemindahan</label>
-                                        <input type="text" class="form-control" placeholder="Jenis Pemindahan"
-                                            name="jenis_surat" value="{{ $pemindahan->jenis_surat }}" >
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>PIC Pekerja</label>
-                                        <input type="text" class="form-control" placeholder="PIC Pekerja"
-                                            name="pic_pekerja" value="{{ $pemindahan->pic_pekerja }}" >
+                                        <label >Tanggal Pemindahan</label>
+                                        <input type="date"  class="form-control" placeholder="Tanggal Beli" name="tanggal_beli" value="{{ $pemindahan->tanggal_beli }}">
                                     </div>
                                 </div>
                             </div>

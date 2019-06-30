@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Asset;
 use App\Ruang;
 use Illuminate\Http\Request;
+use App\Exports\AssetExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 
 class AssetController extends Controller
 {
@@ -15,7 +18,7 @@ class AssetController extends Controller
      */
     public function index()
     {
-        $data['asset'] = Asset::with('ruang')->get();
+        $data['asset'] = Asset::with('ruang')->where('status_pemusnahan', 'False')->get();
         $today = Date('Y-m-d');
         foreach ($data['asset'] as $item) {
             if (Date('Y-m-d', strtotime($item->tanggal_penyusutan . " +" . $item->umur_ekonomis . " years")) == $today) {
@@ -30,6 +33,12 @@ class AssetController extends Controller
 
         return view('asset.index', $data);
     }
+ 
+	public function exportExcel()
+	{
+		return Excel::download(new AssetExport, 'asset.xlsx');
+	}
+
 
     /**
      * Show the form for creating a new resource.
@@ -58,15 +67,21 @@ class AssetController extends Controller
         $other = $request['sub_kategori_other'];
         if ($other != null && $other != '') {
             $request['sub_kategori'] = $other;
+            $request['jenis'] = '-';
         };
+
         $penyusutan = (int)ceil((int)$request['value_beli']/(int)$request['umur_ekonomis']); 
+        $kosong = '-';
+        if ($request['umur_ekonomis'] == null) {
+            $penyusutan = $kosong;
+        }
         Asset::create([
             'id_ruang' => $request['id_ruang'],
             'nama' => $request['nama'],
             'kode' => $request['kode'],
             'kategori' => $request['kategori'],
             'sub_kategori' => $request['sub_kategori'],
-            'jenis' => $request['jenis'],
+            'jenis' => '-',
             'deskripsi' => $request['deskripsi'],
             'tanggal_beli' => $request['tanggal_beli'],
             'value_beli' => $request['value_beli'],
@@ -98,6 +113,14 @@ class AssetController extends Controller
      * @param  \App\Asset  $asset
      * @return \Illuminate\Http\Response
      */
+    public function detail(Request $request)
+    {
+        $data['asset'] = Asset::find($request['id']);
+        $data['ruang'] = Ruang::all();
+
+        return view('asset.detail', $data);
+    }
+
     public function edit(Request $request)
     {
         $data['asset'] = Asset::find($request['id']);

@@ -38,34 +38,21 @@
             </div>
             <div class="card-content collpase show">
                 <div class="card-body">
-                    <form action="/pemusnahan/update/{id}" class="form" method="POST">
+                    <form action="/pemusnahan/update/{{ $pemusnahan->id }}" class="form" method="POST">
                       @csrf
-                    <input type="hidden" id="id" name="id" value="{{ $pemusnahan->id }}">
                         <div class="form-body">
                           <h4 class="form-section">Edit Ruang</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label >Nama Barang</label>
-                                        <input type="text" id="id_asset" class="form-control" name="id_asset"  value="{{ $pemusnahan->asset->nama }},Kode: {{ $pemusnahan->asset->kode }},Kondisi: {{ $pemusnahan->asset->kondisi }}" readonly>
+                                        <label >Nomor Pengajuan</label>
+                                        <input type="text"  class="form-control" placeholder="Nomor Pengajuan" name="no_pengajuan" value="{{ $pemusnahan->no_pengajuan }}">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label >Nama Pemusnahan</label>
-                                    <input type="text" class="form-control" placeholder="Nama Pemusnahan" name="nama_surat" value="{{ $pemusnahan->nama_surat }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >Nomor Pemusnahan</label>
-                                        <input type="text" class="form-control" placeholder="Nomor Pemusnahan" name="no_surat" value="{{ $pemusnahan->no_surat }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label >PIC Pekerja</label>
-                                        <input type="text" class="form-control" placeholder="PIC Pekerja" name="pic_pekerja" value="{{ $pemusnahan->pic_pekerja }}">
+                                        <label >Tanggal Pemusnahan</label>
+                                        <input type="date"  class="form-control" placeholder="Tanggal Beli" name="tanggal_beli" value="{{ $pemusnahan->tanggal_beli }}">
                                     </div>
                                 </div>
                             </div>

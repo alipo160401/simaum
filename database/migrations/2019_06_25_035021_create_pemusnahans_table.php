@@ -15,14 +15,11 @@ class CreatePemusnahansTable extends Migration
     {
         Schema::create('pemusnahans', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_asset')->unsigned()->nullable();
-            $table->string('nama_surat')->nullable();
-            $table->string('no_surat')->nullable();
-            $table->string('status')->nullable();
-            $table->string('pic_pekerja')->nullable();
+            $table->string('no_pengajuan');
+            $table->string('tanggal_beli')->nullable();
+            $table->string('status');
             $table->timestamps();
-            
-            $table->foreign('id_asset')->references('id')->on('assets')->onDelete('cascade');
+
         });
     }
 

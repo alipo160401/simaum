@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Tanah;
 use Illuminate\Http\Request;
+use App\Exports\TanahExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 
 class TanahController extends Controller
 {
@@ -19,6 +22,12 @@ class TanahController extends Controller
 
         return view('tanah.index', $data);
     }
+ 
+	public function exportExcel()
+	{
+		return Excel::download(new TanahExport, 'tanah.xlsx');
+	}
+
 
     /**
      * Show the form for creating a new resource.
@@ -64,6 +73,13 @@ class TanahController extends Controller
      * @param  \App\Tanah  $tanah
      * @return \Illuminate\Http\Response
      */
+    public function detail(Request $request)
+    {
+        $data['tanah'] = Tanah::find($request['id']);
+
+        return view('tanah.detail', $data);
+    }
+
     public function edit(Request $request)
     {
         $data['tanah'] = Tanah::find($request['id']);

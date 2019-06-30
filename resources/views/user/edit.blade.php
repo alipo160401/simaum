@@ -20,6 +20,11 @@
         </div>
     </div>
 </div>
+<div class="content-header-right col-md-6 col-12">
+    <div class="btn-group float-md-right">
+        <a href="/user/index" class="btn btn-info">Kembali</a>
+    </div>
+</div>
 @endsection
 
 @section('content')

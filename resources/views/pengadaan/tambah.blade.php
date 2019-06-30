@@ -40,7 +40,7 @@
                 <div class="card-body">
                     <form action="/pengadaan/store" class="form" method="POST" enctype="multipart/form-data">
                       @csrf
-                        <div class="form-body">
+                    <div class="form-body">
                           <h4 class="form-section">Tambah Pengadaan</h4>
                             <div class="row">
                                 <div class="col-md-12">
